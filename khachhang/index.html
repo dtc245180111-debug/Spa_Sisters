@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spa Sisters</title>
+  <meta name="description"
+    content="Trải nghiệm dịch vụ spa đẳng cấp hoàng gia tại Plumeria Spa by Royal. Tích hợp công nghệ tư vấn AI thông minh chẩn đoán làn da và sức khỏe cá nhân hóa.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- ==================== HEADER / NAVIGATION ==================== -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#" class="logo-brand">
+        <div class="logo-icon">
+          <img src="./Logo_spa.jpg" alt="Spa Sisters Logo" class="logo-img">
+        </div>
+        <div class="logo-text-wrapper">
+          <span class="logo-title">Spa Sisters</span>
+          <span class="logo-subtitle">Spa by ROYAL</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="#about" class="nav-link" data-i18n="navAbout">Về Chúng Tôi</a></li>
+        <li><a href="#services" class="nav-link" data-i18n="navServices">Dịch Vụ</a></li>
+        <li><a href="#ai-consultation" class="nav-link" data-i18n="navAI">Tư Vấn AI</a></li>
+        <li><a href="#promotions" class="nav-link" data-i18n="navPromos">Ưu Đãi</a></li>
+        <li><a href="#contact" class="nav-link" data-i18n="navContact">Liên Hệ</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="vi">🇻🇳 VI</button>
+          <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+        </div>
+        <button class="btn btn-gold" onclick="openBookingModal()" data-i18n="navBookBtn">ĐẶT LỊCH</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero-section" id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge-gold" style="margin-bottom: 16px;">✦ LUXURY ROYAL SPA & WELLNESS ✦</div>
+      <p class="hero-subtitle" data-i18n="heroSubtitle">Spa Sisters</p>
+      <h1 class="hero-title" data-i18n="heroTitle">VẺ ĐẸP THĂNG HOA - SỨC KHỎE VẸN TOÀN</h1>
+      <p class="hero-description" data-i18n="heroDesc">
+        Tận hưởng khoảnh khắc thư thái đỉnh cao trong không gian kiến trúc hoàng gia kết hợp với công nghệ chăm sóc & tư
+        vấn AI hiện đại.
+      </p>
+      <div class="hero-cta-group">
+        <button class="btn btn-gold" onclick="openBookingModal()" data-i18n="heroBtnBook">Đặt Lịch Ngay</button>
+        <a href="#ai-consultation" class="btn btn-ai" data-i18n="heroBtnAI">✨ Tư Vấn AI 24/7</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT US SECTION ==================== -->
+  <section class="section section-dark" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrapper">
+          <img src="assets/images/spa_herbal_bath.jpg" alt="Spa Sisters">
+          <div class="about-experience-badge">
+            <div class="years">15+</div>
+            <div class="text">Năm Kinh Nghiệm Hoàng Gia</div>
+          </div>
+        </div>
+        <div>
+          <div class="badge-gold">VỀ CHÚNG TÔI</div>
+          <h2 class="section-title" data-i18n="aboutTitle">Tinh Hoa Spa <span>Hoàng Gia & Hiện Đại</span></h2>
+          <p class="section-desc" style="text-align: left; margin-bottom: 24px;" data-i18n="aboutDesc">
+            Sisters Spa by Royal mang đến liệu pháp chăm sóc sức khỏe và sắc đẹp độc bản, kết hợp thảo mộc thiên nhiên
+            quý hiếm cùng công nghệ AI hỗ trợ phân tích làn da và sức khỏe cá nhân hóa.
+          </p>
+
+          <div class="about-features">
+            <div class="about-feature-item">
+              <div class="about-feature-icon">🌿</div>
+              <div class="about-feature-text">
+                <h4>100% Organic & Thảo Mộc</h4>
+                <p>Tinh dầu hữu cơ nhập khẩu cùng ngải cứu, quế chi Đông Y.</p>
+              </div>
+            </div>
+            <div class="about-feature-item">
+              <div class="about-feature-icon">👑</div>
+              <div class="about-feature-text">
+                <h4>Phòng VIP Độc Bản</h4>
+                <p>Không gian yên tĩnh tuyệt đối với hương hoa sứ tự nhiên.</p>
+              </div>
+            </div>
+            <div class="about-feature-item">
+              <div class="about-feature-icon">🤖</div>
+              <div class="about-feature-text">
+                <h4>AI Diagnostic Smart Care</h4>
+                <p>Chẩn đoán da & phân tích mức độ mệt mỏi bằng AI.</p>
+              </div>
+            </div>
+            <div class="about-feature-item">
+              <div class="about-feature-icon">💆</div>
+              <div class="about-feature-text">
+                <h4>Kỹ Thuật Viên Hoàng Gia</h4>
+                <p>Được đào tạo theo tiêu chuẩn trị liệu cao cấp 5 sao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== AI WELLNESS CONSULTATION SECTION ==================== -->
+  <section class="section" id="ai-consultation">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-gold">✦ TRÍ TUỆ NHÂN TẠO CÁ NHÂN HÓA ✦</div>
+        <h2 class="section-title" data-i18n="aiSectionTitle">Trợ Lý AI <span>Tư Vấn Thư Giãn</span></h2>
+        <p class="section-desc" data-i18n="aiSectionDesc">
+          Chọn các nhu cầu của bạn bên dưới để Trợ lý AI Sisters phân tích và gợi ý liệu trình tối ưu nhất cho riêng bạn.
+        </p>
+      </div>
+
+      <div class="ai-consultation-box">
+        <div class="ai-wizard-steps">
+          <div class="ai-quiz-container">
+            <div class="quiz-option-group">
+              <span class="quiz-label">1. Vấn Đề Bạn Đang Gặp Phải:</span>
+              <div class="quiz-chip-grid">
+                <button type="button" class="quiz-chip selected" data-concern="stress" onclick="selectChip(this)">🧘 Căng Thẳng & Stress</button>
+                <button type="button" class="quiz-chip" data-concern="neck-pain" onclick="selectChip(this)">💆 Đau Mỏi Vai Gáy</button>
+                <button type="button" class="quiz-chip" data-concern="aging" onclick="selectChip(this)">✨ Da Khô & Lão Hóa</button>
+                <button type="button" class="quiz-chip" data-concern="sleep" onclick="selectChip(this)">🌙 Mất Ngủ / Khó Ngủ</button>
+                <button type="button" class="quiz-chip" data-concern="detox" onclick="selectChip(this)">🍃 Độc Tố Toàn Thân</button>
+              </div>
+            </div>
+
+            <div class="quiz-option-group">
+              <span class="quiz-label">2. Thời Lượng Trải Nghiệm Mong Muốn:</span>
+              <div class="quiz-chip-grid">
+                <button type="button" class="quiz-chip selected" data-time="60" onclick="selectChip(this)">60 Phút</button>
+                <button type="button" class="quiz-chip" data-time="90" onclick="selectChip(this)">90 Phút (Khuyên Dùng)</button>
+                <button type="button" class="quiz-chip" data-time="120" onclick="selectChip(this)">120 Phút VIP</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="aiResultBox" class="ai-result-card">
+            <!-- Dynamic AI content rendered via js/app.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES CATALOG SECTION ==================== -->
+  <section class="section section-dark" id="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-gold">MENU DỊCH VỤ</div>
+        <h2 class="section-title" data-i18n="servicesTitle">Danh Mục <span>Dịch Vụ Đẳng Cấp</span></h2>
+        <p class="section-desc">Mỗi liệu trình là một hành trình thư giãn chuyên sâu được đo đạc tinh tế.</p>
+      </div>
+
+      <div class="service-filter-bar">
+        <button class="filter-btn active" data-category="all" data-i18n="filterAll">Tất Cả</button>
+        <button class="filter-btn" data-category="massage" data-i18n="filterMassage">Massage Trị Liệu</button>
+        <button class="filter-btn" data-category="facial" data-i18n="filterFacial">Chăm Sóc Da Mặt</button>
+        <button class="filter-btn" data-category="body" data-i18n="filterBody">Tắm & Ủ Thảo Dược</button>
+      </div>
+
+      <div class="services-grid">
+        <!-- Service Card 1 -->
+        <div class="service-card" data-category="massage">
+          <div class="service-img-wrapper">
+            <img src="assets/images/massage_therapy.jpg" alt="Massage Đá Nóng Hoàng Gia">
+            <span class="service-duration-badge">90 Phút</span>
+          </div>
+          <div class="service-body">
+            <h3 class="service-title">Trị Liệu Đá Nóng Hoàng Gia</h3>
+            <p class="service-desc">Kết hợp đá núi lửa bazan ấm nóng và tinh dầu hoa sứ lavender giúp giải tỏa hoàn toàn co thắt cơ bắp và lưu thông khí huyết.</p>
+            <div class="service-footer">
+              <span class="service-price">1.200.000 VNĐ</span>
+              <button class="btn btn-gold" onclick="openBookingModal('hot-stone-royal')">Đặt Lịch</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Card 2 -->
+        <div class="service-card" data-category="facial">
+          <div class="service-img-wrapper">
+            <img src="assets/images/facial_care.jpg" alt="Liệu Trình Da Mặt Vàng 24K">
+            <span class="service-duration-badge">75 Phút</span>
+          </div>
+          <div class="service-body">
+            <h3 class="service-title">Tái Tạo Da Mặt Vàng Lá 24K</h3>
+            <p class="service-desc">Phương pháp trẻ hóa hoàng gia sử dụng vàng 24K nguyên chất kết hợp tinh chất hoa hồng Thổ Nhĩ Kỳ cho làn da căng bóng rạng rỡ.</p>
+            <div class="service-footer">
+              <span class="service-price">1.500.000 VNĐ</span>
+              <button class="btn btn-gold" onclick="openBookingModal('gold-facial-rejuvenation')">Đặt Lịch</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Card 3 -->
+        <div class="service-card" data-category="body">
+          <div class="service-img-wrapper">
+            <img src="assets/images/spa_herbal_bath.jpg" alt="Tắm Thảo Dược Hoàng Cung">
+            <span class="service-duration-badge">60 Phút</span>
+          </div>
+          <div class="service-body">
+            <h3 class="service-title">Tắm Thảo Dược & Ủ Dưỡng Hoa Nhài</h3>
+            <p class="service-desc">Ngâm bồn bách thảo trong lòng gỗ thông tự nhiên kết hợp tẩy tế bào chết bằng thảo dược bách nhật thơm ngát.</p>
+            <div class="service-footer">
+              <span class="service-price">850.000 VNĐ</span>
+              <button class="btn btn-gold" onclick="openBookingModal('herbal-detox-soak')">Đặt Lịch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROMOTIONS SECTION ==================== -->
+  <section class="section" id="promotions">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-gold">ƯU ĐÃI ĐẶC BIỆT</div>
+        <h2 class="section-title">Khuyến Mãi <span>Hoàng Gia</span></h2>
+        <p class="section-desc">Đón nhận những đặc quyền chăm sóc sức khỏe với voucher ưu đãi hấp dẫn.</p>
+      </div>
+
+      <div class="promo-grid">
+        <div class="promo-card">
+          <div class="promo-discount-tag">GIẢM 20%</div>
+          <h3 class="promo-title">Gói Spa Đôi "Royal Sweet"</h3>
+          <p style="color: var(--text-muted); margin-bottom: 20px;">Trải nghiệm 120 phút thư giãn trọn vẹn trong phòng VIP riêng tư cho 2 người kèm tiệc trà & trái cây tươi.</p>
+          <button class="btn btn-gold" onclick="openBookingModal()">Nhận Ưu Đãi Ngay</button>
+        </div>
+
+        <div class="promo-card">
+          <div class="promo-discount-tag">TẶNG 500K</div>
+          <h3 class="promo-title">Thành Viên Mới Đặt Qua AI</h3>
+          <p style="color: var(--text-muted); margin-bottom: 20px;">Tặng voucher trị giá 500.000 VNĐ cho liệu trình chăm sóc da mặt vàng 24K khi hoàn tất chẩn đoán AI.</p>
+          <button class="btn btn-gold" onclick="openBookingModal()">Sử Dụng Voucher</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT & FOOTER ==================== -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo-brand" style="margin-bottom: 16px;">
+            <div class="logo-icon">🌸</div>
+            <div class="logo-text-wrapper">
+              <span class="logo-title">Plumeria</span>
+              <span class="logo-subtitle">Spa by ROYAL</span>
+            </div>
+          </div>
+          <p style="font-size: 0.9rem; margin-bottom: 20px;">
+            Thiên đường thư giãn đỉnh cao, nơi tái tạo năng lượng sống và nâng niu vẻ đẹp tự nhiên của bạn.
+          </p>
+          <p style="font-size: 0.85rem; color: var(--accent-gold-light);">📍 128 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</p>
+          <p style="font-size: 0.85rem; color: var(--accent-gold-light); margin-top: 4px;">📞 Hotline: 0908 123 456 - 028 3822 9999</p>
+        </div>
+
+        <div>
+          <h4>Dịch Vụ chính</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Massage Đá Nóng</a></li>
+            <li><a href="#services">Chăm Sóc Da Vàng 24K</a></li>
+            <li><a href="#services">Tắm Thảo Dược</a></li>
+            <li><a href="#services">Gói Hoàng Gia VIP</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Liên Kết Nhanh</h4>
+          <ul class="footer-links">
+            <li><a href="#about">Về Chúng Tôi</a></li>
+            <li><a href="#ai-consultation">Tư Vấn AI Smart</a></li>
+            <li><a href="#promotions">Chương Trình Khuyến Mãi</a></li>
+            <li><a href="#" onclick="openBookingModal()">Đặt Lịch Trực Tuyến</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Thời Gian Mở Cửa</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 10px;">Thứ Hai - Chủ Nhật: <strong>09:00 - 22:00</strong></p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Ca nhận lịch cuối cùng: 20:30 tối.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Plumeria Spa by Royal. All Rights Reserved. Designed with Integrated AI Concierge.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== FLOATING AI CHAT WIDGET ==================== -->
+  <button id="aiFabBtn" class="ai-fab-button" aria-label="Open AI Concierge">
+    <div class="ai-fab-pulse"></div>
+    <span style="font-size: 1.5rem;">💬</span>
+  </button>
+
+  <div id="aiChatDrawer" class="ai-chat-drawer">
+    <div class="ai-chat-header">
+      <div class="ai-chat-title">
+        <span>✨ Plumeria AI Concierge</span>
+      </div>
+      <button id="closeAiDrawerBtn" class="ai-chat-close">✕</button>
+    </div>
+
+    <div id="aiChatMessages" class="ai-chat-messages">
+      <div class="chat-msg bot">
+        Xin chào! Tôi là Trợ Lý AI của Plumeria Spa. Bạn cần tư vấn chọn liệu trình massage, chăm sóc da hay đặt lịch giữ chỗ VIP hôm nay?
+      </div>
+    </div>
+
+    <div class="ai-chat-input-area">
+      <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="Nhập câu hỏi của bạn...">
+      <button id="sendAiChatBtn" class="ai-chat-send">➤</button>
+    </div>
+  </div>
+
+  <!-- ==================== BOOKING MODAL ==================== -->
+  <div id="bookingModal" class="modal-overlay">
+    <div id="bookingModalCard" class="modal-card">
+      <button id="closeBookingBtn" class="modal-close-btn">&times;</button>
+      <h3 style="font-size: 1.8rem; color: var(--accent-gold-light); margin-bottom: 6px;" data-i18n="bookModalTitle">Đặt Lịch Trải Nghiệm Spa</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;" data-i18n="bookModalSub">Vui lòng điền thông tin để Plumeria Spa chuẩn bị đón tiếp quý khách chu đáo nhất.</p>
+
+      <form id="bookingForm">
+        <div class="form-group">
+          <label class="form-label">Chọn Liệu Trình / Spa Service:</label>
+          <select id="bookServiceSelect" class="form-select" required>
+            <option value="hot-stone-royal">Trị Liệu Đá Nóng Hoàng Gia (90 Phút) - 1.200.000 VNĐ</option>
+            <option value="gold-facial-rejuvenation">Tái Tạo Da Mặt Vàng Lá 24K (75 Phút) - 1.500.000 VNĐ</option>
+            <option value="herbal-detox-soak">Tắm Thảo Dược & Ủ Dưỡng Hoa Nhài (60 Phút) - 850.000 VNĐ</option>
+            <option value="deep-tissue-bamboo">Massage Tre Thảo Dược Trị Liệu Vai Gáy (90 Phút) - 1.100.000 VNĐ</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="form-label">Chọn Ngày / Date:</label>
+            <input type="date" id="bookDate" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Chọn Giờ / Time Slot:</label>
+            <select id="bookTime" class="form-select" required>
+              <option value="09:30">09:30 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="14:00" selected>02:00 PM</option>
+              <option value="16:30">04:30 PM</option>
+              <option value="18:30">06:30 PM</option>
+              <option value="20:00">08:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Họ Và Tên Khách Hàng / Full Name:</label>
+          <input type="text" id="bookName" class="form-input" placeholder="Ví dụ: Nguyễn Văn A" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Số Điện Thoại / Phone Number:</label>
+          <input type="tel" id="bookPhone" class="form-input" placeholder="0901234567" required>
+        </div>
+
+        <button type="submit" class="btn btn-gold" style="width: 100%; margin-top: 10px;" data-i18n="btnConfirmBook">XÁC NHẬN ĐẶT LỊCH</button>
+      </form>
+    </div>
+  </div>
+
+ <script src="js/ai-concierge.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Dữ liệu tư vấn AI cho từng lựa chọn
+    const aiRecommendations = {
+      'stress': {
+        title: '🧘 Liệu Trình Giải Tỏa Stress & Phục Hồi Năng Lượng',
+        service: 'Trị Liệu Đá Nóng Hoàng Gia (90 Phút)',
+        desc: 'Hệ thống AI nhận thấy bạn đang bị căng thẳng thần kinh. Liệu trình đá núi lửa bazan kết hợp tinh dầu hoa sứ lavender sẽ làm dịu hệ thần kinh, giải tỏa mệt mỏi tức thì.',
+        price: '1.200.000 VNĐ'
+      },
+      'neck-pain': {
+        title: '💆 Liệu Trình Trị Liệu Vai Gáy Chuyên Sâu',
+        service: 'Massage Tre Thảo Dược Trị Liệu Vai Gáy (90 Phút)',
+        desc: 'AI chẩn đoán vùng cơ cổ vai gáy bị bó cứng. Phương pháp chườm ngải cứu Đông Y kết hợp thanh tre ấm sẽ đánh tan các nút thắt cơ và thông suốt khí huyết.',
+        price: '1.100.000 VNĐ'
+      },
+      'aging': {
+        title: '✨ Liệu Trình Trẻ Hóa & Tái Tạo Làn Da',
+        service: 'Tái Tạo Da Mặt Vàng Lá 24K (75 Phút)',
+        desc: 'Làn da của bạn cần được cấp ẩm và phục hồi độ đàn hồi. Tinh chất vàng 24K cùng hoa hồng Thổ Nhĩ Kỳ sẽ kích thích sản sinh collagen, nuôi dưỡng da sáng mịn.',
+        price: '1.500.000 VNĐ'
+      },
+      'sleep': {
+        title: '🌙 Liệu Trình Dưỡng Tâm & Cải Thiện Giấc Ngủ',
+        service: 'Tắm Thảo Dược & Ủ Dưỡng Hoa Nhài (60 Phút)',
+        desc: 'Phương pháp ngâm bồn bách thảo kết hợp bấm huyệt đầu thư giãn giúp điều hòa nhịp sinh học, cho bạn giấc ngủ ngon và sâu hơn.',
+        price: '850.000 VNĐ'
+      },
+      'detox': {
+        title: '🍃 Liệu Trình Thanh Lọc & Tẩy Độc Toàn Thân',
+        service: 'Tắm Thảo Dược Hoàng Cung & Detox Body (90 Phút)',
+        desc: 'Sử dụng muối khoáng kết hợp thảo mộc Đông Y xông hơi giúp bài tiết độc tố qua da, mang lại cảm giác nhẹ nhàng, tràn đầy sức sống.',
+        price: '1.000.000 VNĐ'
+      }
+    };
+
+    // Hàm cập nhật khung Tư Vấn AI
+    function updateAIConsultation() {
+      const selectedConcern = document.querySelector('[data-concern].selected')?.getAttribute('data-concern') || 'stress';
+      const selectedTime = document.querySelector('[data-time].selected')?.getAttribute('data-time') || '90';
+      const resultBox = document.getElementById('aiResultBox');
+      
+      const data = aiRecommendations[selectedConcern];
+
+      if (resultBox && data) {
+        resultBox.innerHTML = `
+          <div style="background: rgba(255, 255, 255, 0.9); border: 1px solid #e8a5b8; border-radius: 12px; padding: 20px; color: #333; margin-top: 15px;">
+            <h4 style="color: #c5a059; font-size: 1.2rem; margin-bottom: 8px;">${data.title}</h4>
+            <p style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px;">${data.desc}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #ddd; padding-top: 10px;">
+              <div>
+                <span style="font-size: 0.85rem; color: #666;">Dịch vụ đề xuất (${selectedTime} Phút):</span>
+                <div style="font-weight: bold; color: #222;">${data.service}</div>
+              </div>
+              <button class="btn btn-gold" onclick="openBookingModal()" style="padding: 8px 16px; font-size: 0.85rem;">Đặt Lịch Ngay</button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Hàm chọn Nút Chip
+    function selectChip(element) {
+      const parent = element.parentElement;
+      parent.querySelectorAll('.quiz-chip').forEach(btn => btn.classList.remove('selected'));
+      element.classList.add('selected');
+      updateAIConsultation(); // Gọi cập nhật tư vấn ngay lập tức khi click
+    }
+
+    // Hiển thị tư vấn ban đầu khi tải trang
+    document.addEventListener('DOMContentLoaded', updateAIConsultation);
+  </script>
+</body>
+</html>
