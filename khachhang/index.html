@@ -5,9 +5,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spa Sisters</title>
-  <meta name="description"
-    content="Trải nghiệm dịch vụ spa đẳng cấp hoàng gia tại Plumeria Spa by Royal. Tích hợp công nghệ tư vấn AI thông minh chẩn đoán làn da và sức khỏe cá nhân hóa.">
+  <meta name="description" content="Trải nghiệm dịch vụ spa đẳng cấp hoàng gia tại Plumeria Spa by Royal. Tích hợp công nghệ tư vấn AI thông minh chẩn đoán làn da và sức khỏe cá nhân hóa.">
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* CSS Giỏ hàng, Bộ chọn số lượng & Modal Mua Hàng */
+    .cart-btn-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #e74c3c;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 2px 6px;
+      min-width: 18px;
+      text-align: center;
+    }
+    .qty-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .qty-btn {
+      background: #c5a059;
+      color: #fff;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .qty-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+    .qty-input {
+      width: 45px;
+      text-align: center;
+      border: 1px solid #c5a059;
+      border-radius: 4px;
+      padding: 4px;
+      background: #fff;
+      color: #333;
+    }
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      color: #333;
+    }
+    .cart-table th, .cart-table td {
+      border-bottom: 1px solid #eee;
+      padding: 10px 6px;
+      text-align: left;
+    }
+    .product-action-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .product-action-group button {
+      flex: 1;
+      white-space: nowrap;
+    }
+  </style>
 </head>
 
 <body>
@@ -28,6 +96,7 @@
       <ul class="nav-menu">
         <li><a href="#about" class="nav-link" data-i18n="navAbout">Về Chúng Tôi</a></li>
         <li><a href="#services" class="nav-link" data-i18n="navServices">Dịch Vụ</a></li>
+        <li><a href="#products" class="nav-link">Sản Phẩm</a></li>
         <li><a href="#ai-consultation" class="nav-link" data-i18n="navAI">Tư Vấn AI</a></li>
         <li><a href="#promotions" class="nav-link" data-i18n="navPromos">Ưu Đãi</a></li>
         <li><a href="#contact" class="nav-link" data-i18n="navContact">Liên Hệ</a></li>
@@ -38,6 +107,14 @@
           <button class="lang-btn active" data-lang="vi">🇻🇳 VI</button>
           <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
         </div>
+        
+        <!-- NÚT GIỎ HÀNG -->
+        <div class="cart-btn-wrapper">
+          <button class="btn btn-gold" onclick="openCartModal()" style="padding: 8px 14px;">
+            🛒 Giỏ Hàng <span id="cartCountBadge" class="cart-badge">0</span>
+          </button>
+        </div>
+
         <button class="btn btn-gold" onclick="openBookingModal()" data-i18n="navBookBtn">ĐẶT LỊCH</button>
       </div>
     </div>
@@ -51,8 +128,7 @@
       <p class="hero-subtitle" data-i18n="heroSubtitle">Spa Sisters</p>
       <h1 class="hero-title" data-i18n="heroTitle">VẺ ĐẸP THĂNG HOA - SỨC KHỎE VẸN TOÀN</h1>
       <p class="hero-description" data-i18n="heroDesc">
-        Tận hưởng khoảnh khắc thư thái đỉnh cao trong không gian kiến trúc hoàng gia kết hợp với công nghệ chăm sóc & tư
-        vấn AI hiện đại.
+        Tận hưởng khoảnh khắc thư thái đỉnh cao trong không gian kiến trúc hoàng gia kết hợp với công nghệ chăm sóc & tư vấn AI hiện đại.
       </p>
       <div class="hero-cta-group">
         <button class="btn btn-gold" onclick="openBookingModal()" data-i18n="heroBtnBook">Đặt Lịch Ngay</button>
@@ -76,8 +152,7 @@
           <div class="badge-gold">VỀ CHÚNG TÔI</div>
           <h2 class="section-title" data-i18n="aboutTitle">Tinh Hoa Spa <span>Hoàng Gia & Hiện Đại</span></h2>
           <p class="section-desc" style="text-align: left; margin-bottom: 24px;" data-i18n="aboutDesc">
-            Sisters Spa by Royal mang đến liệu pháp chăm sóc sức khỏe và sắc đẹp độc bản, kết hợp thảo mộc thiên nhiên
-            quý hiếm cùng công nghệ AI hỗ trợ phân tích làn da và sức khỏe cá nhân hóa.
+            Sisters Spa by Royal mang đến liệu pháp chăm sóc sức khỏe và sắc đẹp độc bản, kết hợp thảo mộc thiên nhiên quý hiếm cùng công nghệ AI hỗ trợ phân tích làn da và sức khỏe cá nhân hóa.
           </p>
 
           <div class="about-features">
@@ -150,9 +225,7 @@
             </div>
           </div>
 
-          <div id="aiResultBox" class="ai-result-card">
-            <!-- Dynamic AI content rendered via js/app.js -->
-          </div>
+          <div id="aiResultBox" class="ai-result-card"></div>
         </div>
       </div>
     </div>
@@ -167,6 +240,7 @@
         <p class="section-desc">Mỗi liệu trình là một hành trình thư giãn chuyên sâu được đo đạc tinh tế.</p>
       </div>
 
+      <!-- THANH LỌC DANH MỤC -->
       <div class="service-filter-bar">
         <button class="filter-btn active" data-category="all" data-i18n="filterAll">Tất Cả</button>
         <button class="filter-btn" data-category="massage" data-i18n="filterMassage">Massage Trị Liệu</button>
@@ -174,60 +248,49 @@
         <button class="filter-btn" data-category="body" data-i18n="filterBody">Tắm & Ủ Thảo Dược</button>
       </div>
 
-      <div class="services-grid">
-        <!-- Service Card 1 -->
-        <div class="service-card" data-category="massage">
-          <div class="service-img-wrapper">
-            <img src="assets/images/massage_therapy.jpg" alt="Massage Đá Nóng Hoàng Gia">
-            <span class="service-duration-badge">90 Phút</span>
-          </div>
-          <div class="service-body">
-            <h3 class="service-title">Trị Liệu Đá Nóng Hoàng Gia</h3>
-            <p class="service-desc">Kết hợp đá núi lửa bazan ấm nóng và tinh dầu hoa sứ lavender giúp giải tỏa hoàn toàn co thắt cơ bắp và lưu thông khí huyết.</p>
-            <div class="service-footer">
-              <span class="service-price">1.200.000 VNĐ</span>
-              <button class="btn btn-gold" onclick="openBookingModal('hot-stone-royal')">Đặt Lịch</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Service Card 2 -->
-        <div class="service-card" data-category="facial">
-          <div class="service-img-wrapper">
-            <img src="assets/images/facial_care.jpg" alt="Liệu Trình Da Mặt Vàng 24K">
-            <span class="service-duration-badge">75 Phút</span>
-          </div>
-          <div class="service-body">
-            <h3 class="service-title">Tái Tạo Da Mặt Vàng Lá 24K</h3>
-            <p class="service-desc">Phương pháp trẻ hóa hoàng gia sử dụng vàng 24K nguyên chất kết hợp tinh chất hoa hồng Thổ Nhĩ Kỳ cho làn da căng bóng rạng rỡ.</p>
-            <div class="service-footer">
-              <span class="service-price">1.500.000 VNĐ</span>
-              <button class="btn btn-gold" onclick="openBookingModal('gold-facial-rejuvenation')">Đặt Lịch</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Service Card 3 -->
-        <div class="service-card" data-category="body">
-          <div class="service-img-wrapper">
-            <img src="assets/images/spa_herbal_bath.jpg" alt="Tắm Thảo Dược Hoàng Cung">
-            <span class="service-duration-badge">60 Phút</span>
-          </div>
-          <div class="service-body">
-            <h3 class="service-title">Tắm Thảo Dược & Ủ Dưỡng Hoa Nhài</h3>
-            <p class="service-desc">Ngâm bồn bách thảo trong lòng gỗ thông tự nhiên kết hợp tẩy tế bào chết bằng thảo dược bách nhật thơm ngát.</p>
-            <div class="service-footer">
-              <span class="service-price">850.000 VNĐ</span>
-              <button class="btn btn-gold" onclick="openBookingModal('herbal-detox-soak')">Đặt Lịch</button>
-            </div>
-          </div>
-        </div>
+      <!-- THANH TÌM KIẾM VÀ SẮP XẾP -->
+      <div style="display: flex; gap: 12px; margin: 20px 0 30px 0; justify-content: space-between; flex-wrap: wrap; position: relative; z-index: 10;">
+        <input 
+          type="text" 
+          id="serviceSearchInput" 
+          placeholder="🔍 Tìm kiếm tên hoặc mô tả dịch vụ..." 
+          oninput="handleSearch(this.value)"
+          style="padding: 10px 16px; border-radius: 8px; border: 1px solid #c5a059; background: #ffffff; color: #333333; flex: 1; min-width: 220px;"
+        >
+        
+        <select 
+          id="serviceSortSelect" 
+          onchange="handleSort(this.value)"
+          style="padding: 10px 16px; border-radius: 8px; border: 1px solid #c5a059; background: #ffffff; color: #333333;"
+        >
+          <option value="default">Sắp xếp: Mặc định</option>
+          <option value="price-asc">Giá: Thấp đến Cao</option>
+          <option value="price-desc">Giá: Cao đến Thấp</option>
+          <option value="duration-asc">Thời gian: Tăng dần</option>
+        </select>
       </div>
+
+      <!-- KHU VỰC HIỂN THỊ DANH SÁCH DỊCH VỤ -->
+      <div class="services-grid" id="mainServicesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ==================== PRODUCTS SECTION ==================== -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-gold">SẢN PHẨM CHĂM SÓC DA</div>
+        <h2 class="section-title">Sản Phẩm <span>Chính Hãng</span></h2>
+        <p class="section-desc">Dòng sản phẩm dưỡng da cao cấp được các chuyên gia Spa Sisters khuyên dùng tại nhà.</p>
+      </div>
+
+      <!-- KHU VỰC HIỂN THỊ SẢN PHẨM BÁN LẺ -->
+      <div class="services-grid" id="mainProductsGrid"></div>
     </div>
   </section>
 
   <!-- ==================== PROMOTIONS SECTION ==================== -->
-  <section class="section" id="promotions">
+  <section class="section section-dark" id="promotions">
     <div class="container">
       <div class="section-header">
         <div class="badge-gold">ƯU ĐÃI ĐẶC BIỆT</div>
@@ -273,11 +336,11 @@
         </div>
 
         <div>
-          <h4>Dịch Vụ chính</h4>
+          <h4>Dịch Vụ & Sản Phẩm</h4>
           <ul class="footer-links">
             <li><a href="#services">Massage Đá Nóng</a></li>
             <li><a href="#services">Chăm Sóc Da Vàng 24K</a></li>
-            <li><a href="#services">Tắm Thảo Dược</a></li>
+            <li><a href="#products">Mỹ Phẩm Dưỡng Da</a></li>
             <li><a href="#services">Gói Hoàng Gia VIP</a></li>
           </ul>
         </div>
@@ -286,6 +349,7 @@
           <h4>Liên Kết Nhanh</h4>
           <ul class="footer-links">
             <li><a href="#about">Về Chúng Tôi</a></li>
+            <li><a href="#products">Cửa Hàng Sản Phẩm</a></li>
             <li><a href="#ai-consultation">Tư Vấn AI Smart</a></li>
             <li><a href="#promotions">Chương Trình Khuyến Mãi</a></li>
             <li><a href="#" onclick="openBookingModal()">Đặt Lịch Trực Tuyến</a></li>
@@ -305,32 +369,6 @@
     </div>
   </footer>
 
-  <!-- ==================== FLOATING AI CHAT WIDGET ==================== -->
-  <button id="aiFabBtn" class="ai-fab-button" aria-label="Open AI Concierge">
-    <div class="ai-fab-pulse"></div>
-    <span style="font-size: 1.5rem;">💬</span>
-  </button>
-
-  <div id="aiChatDrawer" class="ai-chat-drawer">
-    <div class="ai-chat-header">
-      <div class="ai-chat-title">
-        <span>✨ Plumeria AI Concierge</span>
-      </div>
-      <button id="closeAiDrawerBtn" class="ai-chat-close">✕</button>
-    </div>
-
-    <div id="aiChatMessages" class="ai-chat-messages">
-      <div class="chat-msg bot">
-        Xin chào! Tôi là Trợ Lý AI của Plumeria Spa. Bạn cần tư vấn chọn liệu trình massage, chăm sóc da hay đặt lịch giữ chỗ VIP hôm nay?
-      </div>
-    </div>
-
-    <div class="ai-chat-input-area">
-      <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="Nhập câu hỏi của bạn...">
-      <button id="sendAiChatBtn" class="ai-chat-send">➤</button>
-    </div>
-  </div>
-
   <!-- ==================== BOOKING MODAL ==================== -->
   <div id="bookingModal" class="modal-overlay">
     <div id="bookingModalCard" class="modal-card">
@@ -341,12 +379,7 @@
       <form id="bookingForm">
         <div class="form-group">
           <label class="form-label">Chọn Liệu Trình / Spa Service:</label>
-          <select id="bookServiceSelect" class="form-select" required>
-            <option value="hot-stone-royal">Trị Liệu Đá Nóng Hoàng Gia (90 Phút) - 1.200.000 VNĐ</option>
-            <option value="gold-facial-rejuvenation">Tái Tạo Da Mặt Vàng Lá 24K (75 Phút) - 1.500.000 VNĐ</option>
-            <option value="herbal-detox-soak">Tắm Thảo Dược & Ủ Dưỡng Hoa Nhài (60 Phút) - 850.000 VNĐ</option>
-            <option value="deep-tissue-bamboo">Massage Tre Thảo Dược Trị Liệu Vai Gáy (90 Phút) - 1.100.000 VNĐ</option>
-          </select>
+          <select id="bookServiceSelect" class="form-select" required></select>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
@@ -382,49 +415,494 @@
     </div>
   </div>
 
- <script src="js/ai-concierge.js"></script>
+  <!-- ==================== MODAL MUA TẬN NƠI (MUA NGAY) ==================== -->
+  <div id="buyNowModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 500px;">
+      <button onclick="closeBuyNowModal()" class="modal-close-btn">&times;</button>
+      <h3 style="font-size: 1.6rem; color: var(--accent-gold-light); margin-bottom: 6px;">Thanh Toán Đơn Hàng</h3>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">Xác nhận thông tin mua hàng trực tiếp.</p>
+
+      <form id="directBuyForm" onsubmit="confirmDirectBuy(event)">
+        <div style="background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 16px; color: #333;">
+          <div id="buyNowProdName" style="font-weight: bold; font-size: 1.05rem;">Tên Sản Phẩm</div>
+          <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 0.9rem;">
+            <span>Đơn giá: <strong id="buyNowProdPrice">0 đ</strong></span>
+            <span>Số lượng: <strong id="buyNowProdQty">1</strong></span>
+          </div>
+          <div style="border-top: 1px dashed #ccc; margin-top: 8px; padding-top: 8px; text-align: right; font-weight: bold; color: var(--accent-gold-light); font-size: 1.1rem;">
+            Tổng tiền: <span id="buyNowTotalPrice">0 VNĐ</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Họ Và Tên Người Nhận:</label>
+          <input type="text" id="buyNowName" class="form-input" placeholder="Ví dụ: Nguyễn Văn A" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Số Điện Thoại:</label>
+          <input type="tel" id="buyNowPhone" class="form-input" placeholder="0901234567" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Địa Chỉ Giao Hàng:</label>
+          <input type="text" id="buyNowAddress" class="form-input" placeholder="Số nhà, tên đường, phường/xã, quận/huyện" required>
+        </div>
+
+        <button type="submit" class="btn btn-gold" style="width: 100%; margin-top: 10px;">XÁC NHẬN MUA HÀNG</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== CART MODAL ==================== -->
+  <div id="cartModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 600px;">
+      <button onclick="closeCartModal()" class="modal-close-btn">&times;</button>
+      <h3 style="font-size: 1.8rem; color: var(--accent-gold-light); margin-bottom: 6px;">Giỏ Hàng Của Bạn</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Xem lại danh sách sản phẩm trước khi thanh toán.</p>
+
+      <div id="cartItemsContainer">
+        <!-- Nội dung giỏ hàng render tại đây -->
+      </div>
+
+      <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 1.1rem; font-weight: bold; color: #333;">Tổng tiền:</span>
+        <span id="cartTotalPrice" style="font-size: 1.3rem; font-weight: bold; color: var(--accent-gold-light);">0 VNĐ</span>
+      </div>
+
+      <button class="btn btn-gold" onclick="checkoutCart()" style="width: 100%; margin-top: 20px;">TIẾN HÀNH THANH TOÁN</button>
+    </div>
+  </div>
+
+  <script src="js/ai-concierge.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- ==================== SCRIPT XỬ LÝ DỊCH VỤ, SẢN PHẨM & MUA HÀNG ==================== -->
   <script>
-    // Dữ liệu tư vấn AI cho từng lựa chọn
+    // 1. DỮ LIỆU DỊCH VỤ CỐ ĐỊNH
+    const servicesData = [
+      {
+        id: 'hot-stone-royal',
+        title: 'Trị Liệu Đá Nóng Hoàng Gia',
+        category: 'massage',
+        duration: 90,
+        price: 1200000,
+        image: 'assets/images/massage_therapy.jpg',
+        desc: 'Kết hợp đá núi lửa bazan ấm nóng và tinh dầu hoa sứ lavender giúp giải tỏa hoàn toàn co thắt cơ bắp và lưu thông khí huyết.'
+      },
+      {
+        id: 'gold-facial-rejuvenation',
+        title: 'Tái Tạo Da Mặt Vàng Lá 24K',
+        category: 'facial',
+        duration: 75,
+        price: 1500000,
+        image: 'assets/images/facial_care.jpg',
+        desc: 'Phương pháp trẻ hóa hoàng gia sử dụng vàng 24K nguyên chất kết hợp tinh chất hoa hồng Thổ Nhĩ Kỳ cho làn da căng bóng rạng rỡ.'
+      },
+      {
+        id: 'herbal-detox-soak',
+        title: 'Tắm Thảo Dược & Ủ Dưỡng Hoa Nhài',
+        category: 'body',
+        duration: 60,
+        price: 850000,
+        image: 'assets/images/spa_herbal_bath.jpg',
+        desc: 'Ngâm bồn bách thảo trong lòng gỗ thông tự nhiên kết hợp tẩy tế bào chết bằng thảo dược bách nhật thơm ngát.'
+      }
+    ];
+
+    // 2. DỮ LIỆU SẢN PHẨM (KÈM KHO VÀ SỐ LƯỢNG MẶC ĐỊNH CHỌN)
+    const productsData = [
+      {
+        id: 'kem-duong-phuc-hoi',
+        title: 'Kem Dưỡng Phục Hồi Da',
+        price: 480000,
+        stock: 28,
+        selectedQty: 1,
+        image: 'assets/images/kem-b5.jpg.png',
+        desc: 'Giúp làm dịu làn da tổn thương, tăng cường hàng rào bảo vệ da và cấp ẩm sâu.'
+      },
+      {
+        id: 'serum-cap-am',
+        title: 'Serum Cấp Ẩm Chuyên Sâu',
+        price: 620000,
+        stock: 5,
+        selectedQty: 1,
+        image: 'assets/images/serum cấp ẩm.png',
+        desc: 'Chứa Hyaluronic Acid đa tầng giúp bổ sung độ ẩm tức thì, cho làn da căng bóng mịn màng.'
+      },
+      {
+        id: 'mat-na-phuc-hoi',
+        title: 'Mặt Nạ Phục Hồi Làn Da',
+        price: 180000,
+        stock: 0,
+        selectedQty: 0,
+        image: 'assets/images/mặt nạ phục hồi.png',
+        desc: 'Mặt nạ sinh học giúp dưỡng ẩm cấp tốc và làm dịu nhạy cảm chỉ sau 15 phút sử dụng.'
+      },
+      {
+        id: 'tay-trang-diu-nhe',
+        title: 'Tẩy Trang Dịu Nhẹ',
+        price: 320000,
+        stock: 14,
+        selectedQty: 1,
+        image: 'assets/images/tẩy trang dịu nhẹ.png',
+        desc: 'Làm sạch sâu bụi bẩn và lớp trang điểm mà vẫn giữ nguyên độ ẩm tự nhiên của da.'
+      },
+      {
+        id: 'bha-tay-te-bao-chet',
+        title: 'Tẩy Tế Bào Chết BHA',
+        price: 400000,
+        stock: 13,
+        selectedQty: 1,
+        image: 'assets/images/BHA.png',
+        desc: 'Hỗ trợ làm sạch lỗ chân lông, ngăn ngừa mụn đầu đen và cải thiện bề mặt da mịn màng.'
+      }
+    ];
+
+    // 3. MẢNG GIỎ HÀNG
+    let cart = [];
+    let activeBuyNowProduct = null;
+
+    // BIẾN TRẠNG THÁI LỌC DỊCH VỤ
+    let activeCategory = 'all';
+    let currentSearchTerm = '';
+    let currentSortMode = 'default';
+
+    // 4. HÀM HIỂN THỊ DANH SÁCH DỊCH VỤ
+    function renderServicesCatalog() {
+      const container = document.getElementById('mainServicesGrid');
+      if (!container) return;
+
+      let list = [...servicesData];
+
+      if (activeCategory !== 'all') {
+        list = list.filter(item => item.category === activeCategory);
+      }
+
+      if (currentSearchTerm.trim() !== '') {
+        const term = currentSearchTerm.toLowerCase();
+        list = list.filter(item => 
+          item.title.toLowerCase().includes(term) || 
+          item.desc.toLowerCase().includes(term)
+        );
+      }
+
+      if (currentSortMode === 'price-asc') {
+        list.sort((a, b) => a.price - b.price);
+      } else if (currentSortMode === 'price-desc') {
+        list.sort((a, b) => b.price - a.price);
+      } else if (currentSortMode === 'duration-asc') {
+        list.sort((a, b) => a.duration - b.duration);
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Không tìm thấy dịch vụ phù hợp.</p>`;
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div class="service-card" data-category="${item.category}">
+          <div class="service-img-wrapper">
+            <img src="${item.image}" alt="${item.title}">
+            <span class="service-duration-badge">${item.duration} Phút</span>
+          </div>
+          <div class="service-body">
+            <h3 class="service-title">${item.title}</h3>
+            <p class="service-desc">${item.desc}</p>
+            <div class="service-footer" style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-weight: bold; color: var(--accent-gold-light);">${Number(item.price).toLocaleString('vi-VN')} VNĐ</span>
+              <button class="btn btn-gold" onclick="openBookingModal('${item.id}')" style="padding: 6px 12px; font-size: 0.8rem;">Đặt Lịch</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 5. HÀM HIỂN THỊ SẢN PHẨM KÈM BỘ CHỌN SỐ LƯỢNG & 2 NÚT "MUA NGAY" / "THÊM VÀO GIỎ"
+    function renderProductsCatalog() {
+      const container = document.getElementById('mainProductsGrid');
+      if (!container) return;
+
+      container.innerHTML = productsData.map(item => {
+        const isOutOfStock = item.stock <= 0;
+        const stockBadge = isOutOfStock 
+          ? `<span class="service-duration-badge" style="background: #e74c3c; color: #fff;">Hết hàng</span>`
+          : `<span class="service-duration-badge" style="background: var(--accent-gold); color: #000;">Còn ${item.stock} SP</span>`;
+
+        const qtyControls = isOutOfStock ? '' : `
+          <div class="qty-selector">
+            <span style="font-size: 0.85rem; color: #555;">Số lượng mua:</span>
+            <button class="qty-btn" onclick="changeProductQty('${item.id}', -1)">-</button>
+            <input type="number" class="qty-input" id="qty-input-${item.id}" value="${item.selectedQty}" min="1" max="${item.stock}" onchange="manualProductQty('${item.id}', this.value)">
+            <button class="qty-btn" onclick="changeProductQty('${item.id}', 1)">+</button>
+          </div>
+        `;
+
+        const buyButtons = isOutOfStock
+          ? `<button class="btn" disabled style="padding: 8px 12px; font-size: 0.85rem; background: #666; color: #ccc; cursor: not-allowed; border: none; width: 100%;">Hết Hàng</button>`
+          : `
+            <div class="product-action-group">
+              <button class="btn btn-gold" onclick="triggerBuyNow('${item.id}')" style="padding: 8px 10px; font-size: 0.8rem;">⚡ Mua Ngay</button>
+              <button class="btn" onclick="addToCart('${item.id}')" style="padding: 8px 10px; font-size: 0.8rem; background: #333; color: #fff; border: 1px solid #c5a059;">🛒 + Giỏ Hàng</button>
+            </div>
+          `;
+
+        return `
+          <div class="service-card" style="${isOutOfStock ? 'opacity: 0.75;' : ''}">
+            <div class="service-img-wrapper">
+              <img src="${item.image}" alt="${item.title}">
+              ${stockBadge}
+            </div>
+            <div class="service-body">
+              <h3 class="service-title">${item.title}</h3>
+              <p class="service-desc">${item.desc}</p>
+              <div style="margin-bottom: 12px;">
+                <span class="service-price" style="font-weight: bold; color: var(--accent-gold-light); font-size: 1.1rem;">${Number(item.price).toLocaleString('vi-VN')} VNĐ</span>
+              </div>
+              ${qtyControls}
+              ${buyButtons}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 6. XỬ LÝ SỐ LƯỢNG MUA TRÊN CARD SẢN PHẨM
+    function changeProductQty(productId, delta) {
+      const prod = productsData.find(p => p.id === productId);
+      if (!prod) return;
+      let newQty = prod.selectedQty + delta;
+      if (newQty >= 1 && newQty <= prod.stock) {
+        prod.selectedQty = newQty;
+        document.getElementById(`qty-input-${productId}`).value = newQty;
+      }
+    }
+
+    function manualProductQty(productId, val) {
+      const prod = productsData.find(p => p.id === productId);
+      if (!prod) return;
+      let parsed = parseInt(val) || 1;
+      if (parsed < 1) parsed = 1;
+      if (parsed > prod.stock) parsed = prod.stock;
+      prod.selectedQty = parsed;
+      document.getElementById(`qty-input-${productId}`).value = parsed;
+    }
+
+    // 7. XỬ LÝ TÍNH NĂNG "MUA NGAY"
+    function triggerBuyNow(productId) {
+      const prod = productsData.find(p => p.id === productId);
+      if (!prod || prod.stock <= 0) return;
+
+      activeBuyNowProduct = { ...prod };
+      const total = prod.price * prod.selectedQty;
+
+      document.getElementById('buyNowProdName').innerText = prod.title;
+      document.getElementById('buyNowProdPrice').innerText = `${Number(prod.price).toLocaleString('vi-VN')} đ`;
+      document.getElementById('buyNowProdQty').innerText = prod.selectedQty;
+      document.getElementById('buyNowTotalPrice').innerText = `${Number(total).toLocaleString('vi-VN')} VNĐ`;
+
+      document.getElementById('buyNowModal').classList.add('active');
+    }
+
+    function closeBuyNowModal() {
+      document.getElementById('buyNowModal').classList.remove('active');
+    }
+
+    function confirmDirectBuy(event) {
+      event.preventDefault();
+      const name = document.getElementById('buyNowName').value;
+      const phone = document.getElementById('buyNowPhone').value;
+      const address = document.getElementById('buyNowAddress').value;
+
+      alert(`ĐẶT HÀNG THÀNH CÔNG!\n\n- Sản phẩm: ${activeBuyNowProduct.title} (${activeBuyNowProduct.selectedQty} sản phẩm)\n- Người nhận: ${name} (${phone})\n- Địa chỉ: ${address}\n\nCảm ơn quý khách! Nhân viên Spa Sisters sẽ liên hệ sớm nhất.`);
+
+      closeBuyNowModal();
+      document.getElementById('directBuyForm').reset();
+    }
+
+    // 8. QUẢN LÝ GIỎ HÀNG
+    function addToCart(productId) {
+      const prod = productsData.find(p => p.id === productId);
+      if (!prod || prod.stock <= 0) return;
+
+      const existingIndex = cart.findIndex(item => item.id === productId);
+      if (existingIndex > -1) {
+        let targetQty = cart[existingIndex].quantity + prod.selectedQty;
+        if (targetQty > prod.stock) {
+          alert(`Số lượng chọn vượt quá tồn kho còn lại (${prod.stock} sản phẩm).`);
+          cart[existingIndex].quantity = prod.stock;
+        } else {
+          cart[existingIndex].quantity = targetQty;
+        }
+      } else {
+        cart.push({
+          id: prod.id,
+          title: prod.title,
+          price: prod.price,
+          stock: prod.stock,
+          quantity: prod.selectedQty
+        });
+      }
+
+      updateCartBadge();
+      alert(`Đã thêm ${prod.selectedQty} x "${prod.title}" vào giỏ hàng!`);
+    }
+
+    function updateCartBadge() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCountBadge').innerText = totalItems;
+    }
+
+    function openCartModal() {
+      renderCartItems();
+      document.getElementById('cartModal').classList.add('active');
+    }
+
+    function closeCartModal() {
+      document.getElementById('cartModal').classList.remove('active');
+    }
+
+    function updateCartItemQty(productId, delta) {
+      const item = cart.find(c => c.id === productId);
+      if (!item) return;
+      let newQty = item.quantity + delta;
+      if (newQty <= 0) {
+        cart = cart.filter(c => c.id !== productId);
+      } else if (newQty <= item.stock) {
+        item.quantity = newQty;
+      } else {
+        alert(`Không thể vượt quá tồn kho (${item.stock} SP).`);
+      }
+      renderCartItems();
+      updateCartBadge();
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cartItemsContainer');
+      const totalPriceEl = document.getElementById('cartTotalPrice');
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p style="text-align: center; color: #666; padding: 20px;">Giỏ hàng của bạn đang trống.</p>`;
+        totalPriceEl.innerText = '0 VNĐ';
+        return;
+      }
+
+      let total = 0;
+      let html = `
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Đơn giá</th>
+              <th style="text-align: center;">Số lượng</th>
+              <th style="text-align: right;">Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        html += `
+          <tr>
+            <td style="font-weight: bold;">${item.title}</td>
+            <td>${Number(item.price).toLocaleString('vi-VN')} đ</td>
+            <td style="text-align: center;">
+              <button class="qty-btn" onclick="updateCartItemQty('${item.id}', -1)">-</button>
+              <span style="margin: 0 6px; font-weight: bold;">${item.quantity}</span>
+              <button class="qty-btn" onclick="updateCartItemQty('${item.id}', 1)">+</button>
+            </td>
+            <td style="text-align: right; font-weight: bold;">${Number(itemTotal).toLocaleString('vi-VN')} đ</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+      totalPriceEl.innerText = `${Number(total).toLocaleString('vi-VN')} VNĐ`;
+    }
+
+    function checkoutCart() {
+      if (cart.length === 0) {
+        alert('Giỏ hàng trống!');
+        return;
+      }
+      alert('Đơn hàng của bạn đã được ghi nhận! Nhân viên Spa Sisters sẽ gọi xác nhận giao hàng sớm nhất.');
+      cart = [];
+      updateCartBadge();
+      closeCartModal();
+    }
+
+    // 9. CÁC HÀM XỬ LÝ LỌC & TÌM KIẾM
+    function handleSearch(text) {
+      currentSearchTerm = text;
+      renderServicesCatalog();
+    }
+
+    function handleSort(mode) {
+      currentSortMode = mode;
+      renderServicesCatalog();
+    }
+
+    function updateBookingSelectOptions() {
+      const select = document.getElementById('bookServiceSelect');
+      if (!select) return;
+      select.innerHTML = servicesData.map(item => `
+        <option value="${item.id}">${item.title} (${item.duration} Phút) - ${Number(item.price).toLocaleString('vi-VN')} VNĐ</option>
+      `).join('');
+    }
+
+    // 10. KHỞI TẠO TRANG
+    document.addEventListener('DOMContentLoaded', () => {
+      renderServicesCatalog();
+      renderProductsCatalog();
+      updateBookingSelectOptions();
+
+      document.querySelectorAll('.service-filter-bar .filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.service-filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          activeCategory = e.target.getAttribute('data-category');
+          renderServicesCatalog();
+        });
+      });
+    });
+
+    // 11. DỮ LIỆU TƯ VẤN AI
     const aiRecommendations = {
       'stress': {
         title: '🧘 Liệu Trình Giải Tỏa Stress & Phục Hồi Năng Lượng',
         service: 'Trị Liệu Đá Nóng Hoàng Gia (90 Phút)',
-        desc: 'Hệ thống AI nhận thấy bạn đang bị căng thẳng thần kinh. Liệu trình đá núi lửa bazan kết hợp tinh dầu hoa sứ lavender sẽ làm dịu hệ thần kinh, giải tỏa mệt mỏi tức thì.',
-        price: '1.200.000 VNĐ'
+        desc: 'Hệ thống AI nhận thấy bạn đang bị căng thẳng thần kinh. Liệu trình đá núi lửa bazan kết hợp tinh dầu hoa sứ lavender sẽ làm dịu hệ thần kinh, giải tỏa mệt mỏi tức thì.'
       },
       'neck-pain': {
         title: '💆 Liệu Trình Trị Liệu Vai Gáy Chuyên Sâu',
         service: 'Massage Tre Thảo Dược Trị Liệu Vai Gáy (90 Phút)',
-        desc: 'AI chẩn đoán vùng cơ cổ vai gáy bị bó cứng. Phương pháp chườm ngải cứu Đông Y kết hợp thanh tre ấm sẽ đánh tan các nút thắt cơ và thông suốt khí huyết.',
-        price: '1.100.000 VNĐ'
+        desc: 'AI chẩn đoán vùng cơ cổ vai gáy bị bó cứng. Phương pháp chườm ngải cứu Đông Y kết hợp thanh tre ấm sẽ đánh tan các nút thắt cơ và thông suốt khí huyết.'
       },
       'aging': {
         title: '✨ Liệu Trình Trẻ Hóa & Tái Tạo Làn Da',
         service: 'Tái Tạo Da Mặt Vàng Lá 24K (75 Phút)',
-        desc: 'Làn da của bạn cần được cấp ẩm và phục hồi độ đàn hồi. Tinh chất vàng 24K cùng hoa hồng Thổ Nhĩ Kỳ sẽ kích thích sản sinh collagen, nuôi dưỡng da sáng mịn.',
-        price: '1.500.000 VNĐ'
+        desc: 'Làn da của bạn cần được cấp ẩm và phục hồi độ đàn hồi. Tinh chất vàng 24K cùng hoa hồng Thổ Nhĩ Kỳ sẽ kích thích sản sinh collagen, nuôi dưỡng da sáng mịn.'
       },
       'sleep': {
         title: '🌙 Liệu Trình Dưỡng Tâm & Cải Thiện Giấc Ngủ',
         service: 'Tắm Thảo Dược & Ủ Dưỡng Hoa Nhài (60 Phút)',
-        desc: 'Phương pháp ngâm bồn bách thảo kết hợp bấm huyệt đầu thư giãn giúp điều hòa nhịp sinh học, cho bạn giấc ngủ ngon và sâu hơn.',
-        price: '850.000 VNĐ'
+        desc: 'Phương pháp ngâm bồn bách thảo kết hợp bấm huyệt đầu thư giãn giúp điều hòa nhịp sinh học, cho bạn giấc ngủ ngon và sâu hơn.'
       },
       'detox': {
         title: '🍃 Liệu Trình Thanh Lọc & Tẩy Độc Toàn Thân',
         service: 'Tắm Thảo Dược Hoàng Cung & Detox Body (90 Phút)',
-        desc: 'Sử dụng muối khoáng kết hợp thảo mộc Đông Y xông hơi giúp bài tiết độc tố qua da, mang lại cảm giác nhẹ nhàng, tràn đầy sức sống.',
-        price: '1.000.000 VNĐ'
+        desc: 'Sử dụng muối khoáng kết hợp thảo mộc Đông Y xông hơi giúp bài tiết độc tố qua da, mang lại cảm giác nhẹ nhàng, tràn đầy sức sống.'
       }
     };
 
-    // Hàm cập nhật khung Tư Vấn AI
     function updateAIConsultation() {
       const selectedConcern = document.querySelector('[data-concern].selected')?.getAttribute('data-concern') || 'stress';
       const selectedTime = document.querySelector('[data-time].selected')?.getAttribute('data-time') || '90';
       const resultBox = document.getElementById('aiResultBox');
-      
       const data = aiRecommendations[selectedConcern];
 
       if (resultBox && data) {
@@ -444,15 +922,13 @@
       }
     }
 
-    // Hàm chọn Nút Chip
     function selectChip(element) {
       const parent = element.parentElement;
       parent.querySelectorAll('.quiz-chip').forEach(btn => btn.classList.remove('selected'));
       element.classList.add('selected');
-      updateAIConsultation(); // Gọi cập nhật tư vấn ngay lập tức khi click
+      updateAIConsultation();
     }
 
-    // Hiển thị tư vấn ban đầu khi tải trang
     document.addEventListener('DOMContentLoaded', updateAIConsultation);
   </script>
 </body>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spa Sisters - Hệ Thống Lễ Tân</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spa: {
+                            bg: '#FFF8F9',        /* Nền kem hồng phấn nhẹ */
+                            primary: '#EC4899',   /* Hồng phấn đậm / Accent */
+                            secondary: '#F472B6', /* Hồng phấn mềm */
+                            soft: '#FCE7F3',      /* Hồng pastel nhạt */
+                            card: '#FFFFFF',
+                            text: '#374151'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+.modal-backdrop{background:rgba(55,65,81,.35);backdrop-filter:blur(4px)}
+.modal-card{max-height:90vh;overflow-y:auto}
+.toast{animation:toastIn .25s ease-out}
+@keyframes toastIn{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+.room-card{transition:.2s}
+.room-card:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(236,72,153,.10)}
+.active-filter{background:#fce7f3!important;color:#ec4899!important;border-color:#fbcfe8!important}
+</style>
+
+</head>
+<body class="bg-spa-bg text-spa-text font-sans h-screen overflow-hidden">
+
+    <!-- ==========================================
+         PHẦN 1: MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ
+    =========================================== -->
+    <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200 transition-all duration-500">
+        
+        <!-- Background Blur Elements -->
+        <div class="absolute w-96 h-96 bg-pink-300 rounded-full blur-3xl opacity-40 -top-10 -left-10"></div>
+        <div class="absolute w-96 h-96 bg-rose-200 rounded-full blur-3xl opacity-40 -bottom-10 -right-10"></div>
+
+        <div class="w-full max-w-md p-8 rounded-3xl shadow-xl glass-effect border border-white/60 relative z-10">
+            
+            <!-- Logo Header -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-gradient-to-tr from-spa-primary to-spa-secondary rounded-2xl mx-auto flex items-center justify-center text-white shadow-lg shadow-pink-200 mb-3">
+                    <i class="ph ph-sparkle text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Spa Sisters</h2>
+                <p class="text-xs text-gray-500 mt-1">Cổng vận hành & Quản lý Lễ tân</p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="flex bg-pink-50 p-1 rounded-xl mb-6 border border-pink-100">
+                <button id="tab-login-btn" onclick="switchTab('login')" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-spa-primary transition-all">
+                    Đăng Nhập
+                </button>
+                <button id="tab-register-btn" onclick="switchTab('register')" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all">
+                    Đăng Ký Ca Làm
+                </button>
+            </div>
+
+            <!-- FORM ĐĂNG NHẬP -->
+            <form id="login-form" onsubmit="handleAuth(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Mã Lễ Tân / Email</label>
+                    <div class="relative">
+                        <i class="ph ph-user absolute left-3 top-1/2 -translate-y-1/2 text-pink-400"></i>
+                        <input type="text" required value="LT-8899" placeholder="Nhập mã nhân viên..." 
+                               class="w-full pl-9 pr-4 py-2.5 text-xs bg-pink-50/30 border border-pink-100 rounded-xl focus:outline-none focus:border-spa-primary focus:bg-white transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Mật khẩu</label>
+                    <div class="relative">
+                        <i class="ph ph-lock-key absolute left-3 top-1/2 -translate-y-1/2 text-pink-400"></i>
+                        <input type="password" required value="123456" placeholder="••••••••" 
+                               class="w-full pl-9 pr-4 py-2.5 text-xs bg-pink-50/30 border border-pink-100 rounded-xl focus:outline-none focus:border-spa-primary focus:bg-white transition-all">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs">
+                    <label class="flex items-center gap-2 text-gray-500 cursor-pointer">
+                        <input type="checkbox" checked class="accent-spa-primary rounded"> Ghi nhớ phiên
+                    </label>
+                    <a href="#" class="text-spa-primary font-medium hover:underline">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-spa-primary to-spa-secondary text-white font-bold text-sm rounded-xl shadow-lg shadow-pink-200 hover:opacity-95 transition-all flex items-center justify-center gap-2">
+                    <i class="ph ph-sign-in text-lg"></i> Vào Màn Hình Lễ Tân
+                </button>
+            </form>
+
+            <!-- FORM ĐĂNG KÝ (ĐÃ BỎ CHI NHÁNH) -->
+            <form id="register-form" onsubmit="handleAuth(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Họ và Tên Nhân Viên</label>
+                    <input type="text" required placeholder="Nguyễn Văn A" 
+                           class="w-full px-4 py-2.5 text-xs bg-pink-50/30 border border-pink-100 rounded-xl focus:outline-none focus:border-spa-primary focus:bg-white transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Mã Nhân Viên / Email</label>
+                    <input type="text" required placeholder="LT-XXXX" 
+                           class="w-full px-4 py-2.5 text-xs bg-pink-50/30 border border-pink-100 rounded-xl focus:outline-none focus:border-spa-primary focus:bg-white transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Mật khẩu mới</label>
+                    <input type="password" required placeholder="••••••••" 
+                           class="w-full px-4 py-2.5 text-xs bg-pink-50/30 border border-pink-100 rounded-xl focus:outline-none focus:border-spa-primary focus:bg-white transition-all">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-spa-primary to-spa-secondary text-white font-bold text-sm rounded-xl shadow-lg shadow-pink-200 hover:opacity-95 transition-all flex items-center justify-center gap-2">
+                    <i class="ph ph-user-plus text-lg"></i> Đăng Ký Ca Làm
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-[11px] text-gray-400">
+                <i class="ph ph-shield-check text-xs"></i> Hệ thống xác thực bảo mật tích hợp AI
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================================
+         PHẦN 2: GIAO DIỆN CHÍNH LỄ TÂN (DASHBOARD TRẠNG THÁI MỚI VỪA ĐĂNG NHẬP)
+    =========================================== -->
+    <div id="main-dashboard" class="h-screen flex flex-col hidden">
+        
+        <!-- Header -->
+        <header class="bg-white border-b border-pink-100 px-6 py-3 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-spa-primary to-spa-secondary p-2 rounded-xl text-white">
+                    <i class="ph ph-sparkle text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight text-gray-800">Spa Sisters</h1>
+                    <p class="text-xs text-pink-500 font-medium">Màn hình điều hành Lễ tân</p>
+                </div>
+            </div>
+
+            <!-- AI Smart Search Bar -->
+            <div class="w-1/3 relative">
+                <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-pink-400 text-lg"></i>
+                <input id="ai-search" onkeydown="aiSearch(event)" type="text" placeholder="Hỏi AI: 'Tìm khách đặt 3h' hoặc 'Phòng Facial trống'..." 
+                       class="w-full pl-10 pr-10 py-2 text-sm bg-pink-50/50 border border-pink-200 rounded-full focus:outline-none focus:border-spa-primary focus:ring-2 focus:ring-pink-100 transition-all">
+                <button class="absolute right-2 top-1/2 -translate-y-1/2 text-spa-primary hover:text-rose-600 p-1">
+                    <i class="ph ph-microphone text-lg"></i>
+                </button>
+            </div>
+
+            <!-- User Profile & Time & Logout -->
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="text-sm font-semibold text-gray-800" id="clock">14:30</p>
+                    <p class="text-xs text-gray-500">21/08/2026</p>
+                </div>
+                <div class="w-10 h-10 bg-spa-soft rounded-full flex items-center justify-center text-spa-primary font-bold">
+                    LT
+                </div>
+                <button onclick="logout()" title="Đăng xuất" class="p-2 text-gray-400 hover:text-rose-500 transition-all">
+                    <i class="ph ph-sign-out text-xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Layout -->
+        <div class="flex-1 flex overflow-hidden">
+            
+            <!-- Dynamic Grid Center -->
+            <main class="flex-1 p-6 overflow-y-auto space-y-6">
+                <!-- AI Insight Banner -->
+                <div class="bg-gradient-to-r from-pink-600 to-rose-500 rounded-2xl p-4 text-white flex items-center justify-between shadow-md shadow-pink-100">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-white/20 rounded-lg backdrop-blur-md">
+                            <i class="ph ph-robot text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold text-pink-100 uppercase tracking-wider">AI Alert Center</p>
+                            <p class="text-sm">Hệ thống đã sẵn sàng. Hãy chọn khách hàng từ lịch hẹn hoặc nhập SĐT để check-in.</p>
+                        </div>
+                    </div>
+                    <button class="bg-white text-spa-primary hover:bg-pink-50 text-xs px-4 py-2 rounded-lg transition-all font-bold shadow-sm">
+                        Quét mã QR
+                    </button>
+                </div>
+
+                <!-- Room Grid -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="font-bold text-gray-800 flex items-center gap-2">
+                            <i class="ph ph-door text-spa-primary"></i> Trạng Thái Phòng
+                        </h2>
+                        <div class="flex gap-4 text-xs">
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> Trống (2)</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500"></span> Đang làm (1)</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-500"></span> Đang dọn (1)</span>
+                        </div>
+                    </div>
+
+                    <div id="room-grid" class="grid grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- Timeline Appointments (Thông tin ẩn/tổng quan) -->
+                <div class="bg-white p-5 rounded-xl border border-pink-100 shadow-sm">
+                    <h2 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="ph ph-calendar-check text-spa-primary"></i> Danh Sách Khách Khung Giờ Tiếp Theo
+                    </h2>
+                    <div id="appointment-list" class="space-y-3"></div>
+                </div>
+            </main>
+
+            <!-- Sidebar Right Check-in (MỚI ĐĂNG NHẬP: TRỐNG THÔNG TIN KHÁCH HÀNG) -->
+            <aside class="w-96 bg-white border-l border-pink-100 p-5 flex flex-col justify-between shadow-sm">
+                <div class="space-y-5">
+                    <div class="flex justify-between items-center border-b border-pink-100 pb-3">
+                        <h2 class="font-bold text-gray-800">Check-in Khách Hàng</h2>
+                        <button onclick="openQr()" class="text-xs text-spa-primary hover:underline font-medium">Quét QR</button>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Tra cứu thông tin khách</label>
+                        <div class="relative">
+                            <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input id="customer-search" oninput="searchCustomer(this.value)" type="text"
+                                   placeholder="Nhập SĐT, tên hoặc mã đặt hẹn..."
+                                   class="w-full pl-9 pr-4 py-2.5 text-xs bg-pink-50/30 border border-pink-100 rounded-xl focus:outline-none focus:border-spa-primary focus:bg-white transition-all">
+                        </div>
+                        <div id="customer-results" class="mt-2 space-y-1"></div>
+                    </div>
+
+                    <div id="selected-customer" class="hidden bg-pink-50/40 border border-pink-100 rounded-2xl p-4">
+                        <div class="flex items-center gap-3">
+                            <div id="customer-avatar" class="w-11 h-11 bg-pink-100 rounded-full flex items-center justify-center text-spa-primary font-bold">NA</div>
+                            <div class="min-w-0">
+                                <p id="customer-name" class="text-sm font-bold text-gray-800"></p>
+                                <p id="customer-phone" class="text-xs text-gray-500"></p>
+                                <p id="customer-tier" class="text-[11px] text-pink-500 font-medium"></p>
+                            </div>
+                            <button onclick="clearCustomer()" class="ml-auto text-gray-400 hover:text-rose-500"><i class="ph ph-x"></i></button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Dịch vụ đăng ký</label>
+                        <select id="service-select" onchange="refreshCheckinState()" class="w-full text-xs p-2.5 border border-pink-100 rounded-lg bg-pink-50/30 focus:outline-none focus:border-spa-primary text-gray-700">
+                            <option value="">-- Chọn dịch vụ thực hiện --</option>
+                            <option>Chăm sóc da mặt cơ bản</option>
+                            <option>Massage Body Thụy Điển</option>
+                            <option>Triệt lông vĩnh viễn</option>
+                            <option>Massage cổ vai gáy</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Phòng</label>
+                            <select id="room-select" onchange="refreshCheckinState()" class="w-full text-xs p-2.5 border border-pink-100 rounded-lg bg-white focus:outline-none focus:border-spa-primary"></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">KTV</label>
+                            <select id="staff-select" onchange="refreshCheckinState()" class="w-full text-xs p-2.5 border border-pink-100 rounded-lg bg-white focus:outline-none focus:border-spa-primary"></select>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl p-3 text-xs text-gray-500">
+                        <div class="flex justify-between"><span>Thời lượng</span><b id="duration-preview" class="text-gray-700">60 phút</b></div>
+                        <div class="flex justify-between mt-1"><span>Giá dự kiến</span><b id="price-preview" class="text-spa-primary">0 ₫</b></div>
+                    </div>
+                </div>
+
+                <div class="space-y-2 pt-4 border-t border-pink-100">
+                    <button id="checkin-btn" onclick="confirmCheckin()" class="w-full py-3 bg-gradient-to-r from-spa-primary to-spa-secondary text-white font-bold text-sm rounded-xl shadow-md shadow-pink-100 hover:opacity-95 transition-all flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" disabled>
+                        <i class="ph ph-check-circle text-lg"></i> Xác Nhận Check-In
+                    </button>
+                    <button onclick="newCustomer()" class="w-full py-2 text-xs font-semibold text-spa-primary border border-pink-200 rounded-xl hover:bg-pink-50">+ Tạo khách mới</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+
+    <div id="modal-root" class="hidden fixed inset-0 z-[80] modal-backdrop flex items-center justify-center p-4">
+        <div id="modal-card" class="w-full max-w-lg bg-white rounded-2xl shadow-2xl modal-card"></div>
+    </div>
+    <div id="toast-root" class="fixed top-5 right-5 z-[100] space-y-2"></div>
+
+    <!-- ==========================================
+         PHẦN 3: JAVASCRIPT ĐIỀU HƯỚNG LOGIC
+    =========================================== -->
+    <script>
+        const services = {
+            "Chăm sóc da mặt cơ bản": {price: 350000, duration: 60},
+            "Massage Body Thụy Điển": {price: 450000, duration: 75},
+            "Triệt lông vĩnh viễn": {price: 650000, duration: 60},
+            "Massage cổ vai gáy": {price: 300000, duration: 45}
+        };
+
+        let rooms = [
+            {id:"VIP 1", type:"VIP", capacity:2, status:"ready"},
+            {id:"VIP 2", type:"VIP", capacity:2, status:"ready"},
+            {id:"Body 1", type:"Body", capacity:2, status:"cleaning"},
+            {id:"Body 2", type:"Body", capacity:2, status:"busy"},
+            {id:"Facial 1", type:"Facial", capacity:1, status:"ready"},
+            {id:"Facial 2", type:"Facial", capacity:1, status:"ready"}
+        ];
+
+        let staff = [
+            {id:"linh", name:"Linh", skill:["Triệt lông vĩnh viễn","Chăm sóc da mặt cơ bản"], status:"busy"},
+            {id:"trang", name:"Trang", skill:["Massage cổ vai gáy","Massage Body Thụy Điển"], status:"free"},
+            {id:"mai", name:"Mai", skill:["Chăm sóc da mặt cơ bản","Massage Body Thụy Điển"], status:"free"}
+        ];
+
+        let customers = [
+            {id:"KH001", name:"Nguyễn Minh Anh", phone:"0901234567", tier:"Thành viên Gold", booking:"102", service:"Triệt lông vĩnh viễn"},
+            {id:"KH002", name:"Trần Thu Hà", phone:"0912345678", tier:"Thành viên Silver", booking:"103", service:"Massage cổ vai gáy"},
+            {id:"KH003", name:"Lê Hoàng Nam", phone:"0987654321", tier:"Khách mới", booking:"104", service:"Chăm sóc da mặt cơ bản"}
+        ];
+
+        let appointments = [
+            {id:"102", time:"15:00", customer:"Nguyễn Minh Anh", service:"Triệt lông vĩnh viễn", staff:"Linh", status:"confirmed"},
+            {id:"103", time:"15:30", customer:"Trần Thu Hà", service:"Massage cổ vai gáy", staff:"", status:"waiting"},
+            {id:"104", time:"16:00", customer:"Lê Hoàng Nam", service:"Chăm sóc da mặt cơ bản", staff:"Mai", status:"confirmed"}
+        ];
+
+        let selectedCustomer = null;
+
+        const money = n => new Intl.NumberFormat("vi-VN").format(n) + " ₫";
+        const initials = name => name.split(" ").slice(-2).map(x=>x[0]).join("").toUpperCase();
+
+        function toast(message, type="success"){
+            const el=document.createElement("div");
+            el.className="toast bg-white border border-pink-100 shadow-xl rounded-xl px-4 py-3 text-xs font-semibold text-gray-700 flex items-center gap-2";
+            el.innerHTML=`<i class="ph ${type==="error"?"ph-warning-circle":"ph-check-circle"} text-lg ${type==="error"?"text-rose-500":"text-emerald-500"}"></i>${message}`;
+            document.getElementById("toast-root").appendChild(el);
+            setTimeout(()=>el.remove(),2800);
+        }
+
+        function switchTab(type) {
+            const loginForm=document.getElementById('login-form'), registerForm=document.getElementById('register-form');
+            const loginBtn=document.getElementById('tab-login-btn'), registerBtn=document.getElementById('tab-register-btn');
+            if(type==='login'){
+                loginForm.classList.remove('hidden'); registerForm.classList.add('hidden');
+                loginBtn.className="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-spa-primary transition-all";
+                registerBtn.className="flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all";
+            } else {
+                loginForm.classList.add('hidden'); registerForm.classList.remove('hidden');
+                registerBtn.className="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-spa-primary transition-all";
+                loginBtn.className="flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all";
+            }
+        }
+
+        function handleAuth(event) {
+            event.preventDefault();
+            const authScreen=document.getElementById('auth-screen'), mainDashboard=document.getElementById('main-dashboard');
+            authScreen.classList.add('opacity-0','pointer-events-none');
+            setTimeout(()=>{authScreen.classList.add('hidden');mainDashboard.classList.remove('hidden');renderAll();toast("Đăng nhập thành công");},500);
+        }
+
+        function logout(){
+            document.getElementById('auth-screen').classList.remove('hidden');
+            setTimeout(()=>document.getElementById('auth-screen').classList.remove('opacity-0','pointer-events-none'),50);
+            document.getElementById('main-dashboard').classList.add('hidden');
+        }
+
+        function statusMeta(s){
+            return {
+                ready:["bg-emerald-100 text-emerald-700","Sẵn sàng","emerald"],
+                busy:["bg-rose-100 text-rose-700","Đang làm","rose"],
+                cleaning:["bg-amber-100 text-amber-700","Chờ dọn","amber"],
+                reserved:["bg-blue-100 text-blue-700","Đã đặt","blue"]
+            }[s];
+        }
+
+        function renderRooms(){
+            const grid=document.getElementById("room-grid");
+            grid.innerHTML=rooms.map(r=>{
+                const m=statusMeta(r.status);
+                const action=r.status==="ready"
+                    ? `<button onclick="selectRoom('${r.id}')" class="w-full py-1.5 bg-spa-soft text-spa-primary text-xs rounded-lg font-semibold hover:bg-pink-200">+ Xếp khách vào</button>`
+                    : r.status==="cleaning"
+                    ? `<button onclick="cleanRoom('${r.id}')" class="w-full py-1.5 bg-gray-100 text-gray-600 text-xs rounded-lg font-semibold hover:bg-gray-200">Xác nhận đã dọn</button>`
+                    : `<button onclick="showRoom('${r.id}')" class="w-full py-1.5 bg-gray-100 text-gray-600 text-xs rounded-lg font-semibold hover:bg-gray-200">Xem chi tiết</button>`;
+                return `<div class="room-card bg-white p-4 rounded-xl border border-pink-100 shadow-sm relative overflow-hidden">
+                    <div class="w-1 absolute top-0 left-0 bottom-0 bg-${m[2]}-500"></div>
+                    <div class="flex justify-between items-start mb-2"><span class="font-bold text-gray-800">${r.id}</span><span class="${m[0]} text-xs px-2 py-0.5 rounded-full font-medium">${m[1]}</span></div>
+                    <p class="text-xs text-gray-500 mb-4">${r.status==="busy"?"Khách đang sử dụng":"Sức chứa: "+r.capacity+" giường"}</p>${action}
+                </div>`;
+            }).join("");
+            const counts={ready:0,busy:0,cleaning:0};
+            rooms.forEach(r=>counts[r.status]=(counts[r.status]||0)+1);
+            const legend=document.querySelector('#room-grid')?.parentElement?.previousElementSibling?.querySelectorAll('span');
+            if(legend && legend.length>=3){
+                legend[0].innerHTML=`<span class="w-3 h-3 rounded-full bg-emerald-500"></span> Trống (${counts.ready})`;
+                legend[1].innerHTML=`<span class="w-3 h-3 rounded-full bg-rose-500"></span> Đang làm (${counts.busy})`;
+                legend[2].innerHTML=`<span class="w-3 h-3 rounded-full bg-amber-500"></span> Đang dọn (${counts.cleaning})`;
+            }
+        }
+
+        function renderAppointments(){
+            const list=document.getElementById("appointment-list");
+            const meta={
+                confirmed:["bg-blue-100 text-blue-700","Đã xác nhận"],
+                waiting:["bg-spa-soft text-spa-primary","Chờ phân KTV"],
+                checkedin:["bg-emerald-100 text-emerald-700","Đã check-in"],
+                done:["bg-gray-100 text-gray-600","Hoàn thành"]
+            };
+            list.innerHTML=appointments.map(a=>{
+                const m=meta[a.status]||meta.confirmed;
+                return `<div class="flex items-center justify-between p-3 bg-pink-50/30 rounded-lg border border-pink-100">
+                    <div class="flex items-center gap-3">
+                        <span class="font-bold text-sm text-spa-primary w-12">${a.time}</span>
+                        <div><p class="text-sm font-semibold">${a.customer} <span class="text-[10px] text-gray-400">#${a.id}</span></p>
+                        <p class="text-xs text-gray-500">${a.service} • ${a.staff||"Chưa chọn KTV"}</p></div>
+                    </div>
+                    <button onclick="selectAppointment('${a.id}')" class="${m[0]} text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-medium hover:opacity-80">${a.status==="waiting"?'<i class="ph ph-sparkle"></i> AI gợi ý KTV Trang':m[1]}</button>
+                </div>`;
+            }).join("");
+        }
+
+        function populateSelects(){
+            const room=document.getElementById("room-select");
+            const selectedRoom=room.value;
+            room.innerHTML='<option value="">-- Chọn phòng --</option>'+rooms.filter(r=>r.status==="ready").map(r=>`<option>${r.id}</option>`).join("");
+            if(selectedRoom && [...room.options].some(o=>o.value===selectedRoom)) room.value=selectedRoom;
+
+            const st=document.getElementById("staff-select");
+            const selectedStaff=st.value;
+            st.innerHTML='<option value="">-- Chọn KTV --</option>'+staff.filter(s=>s.status==="free").map(s=>`<option value="${s.name}">${s.name}</option>`).join("");
+            if(selectedStaff && [...st.options].some(o=>o.value===selectedStaff)) st.value=selectedStaff;
+        }
+
+        function renderAll(){ renderRooms(); renderAppointments(); populateSelects(); refreshCheckinState(); }
+
+        function searchCustomer(q){
+            q=q.trim().toLowerCase();
+            const box=document.getElementById("customer-results");
+            if(!q){box.innerHTML="";return;}
+            const found=customers.filter(c=>[c.name,c.phone,c.id,c.booking].some(v=>String(v).toLowerCase().includes(q)));
+            box.innerHTML=found.length ? found.map(c=>`<button onclick="selectCustomer('${c.id}')" class="w-full text-left p-2 rounded-lg border border-pink-100 bg-white hover:bg-pink-50 text-xs">
+                <b>${c.name}</b> · ${c.phone}<span class="block text-[10px] text-gray-400">Đặt hẹn #${c.booking} · ${c.service}</span></button>`).join("") :
+                `<div class="p-2 text-[11px] text-gray-400">Không tìm thấy khách.</div>`;
+        }
+
+        function selectCustomer(id){
+            selectedCustomer=customers.find(c=>c.id===id);
+            document.getElementById("customer-results").innerHTML="";
+            document.getElementById("customer-search").value=selectedCustomer.phone;
+            document.getElementById("selected-customer").classList.remove("hidden");
+            document.getElementById("customer-avatar").textContent=initials(selectedCustomer.name);
+            document.getElementById("customer-name").textContent=selectedCustomer.name;
+            document.getElementById("customer-phone").textContent=selectedCustomer.phone+" · "+selectedCustomer.id;
+            document.getElementById("customer-tier").textContent=selectedCustomer.tier;
+            document.getElementById("service-select").value=selectedCustomer.service;
+            refreshCheckinState();
+        }
+
+        function clearCustomer(){
+            selectedCustomer=null;
+            document.getElementById("selected-customer").classList.add("hidden");
+            document.getElementById("customer-search").value="";
+            refreshCheckinState();
+        }
+
+        function selectAppointment(id){
+            const a=appointments.find(x=>x.id===id);
+            const c=customers.find(x=>x.booking===id);
+            if(c) selectCustomer(c.id);
+            if(a){
+                document.getElementById("service-select").value=a.service;
+                if(a.staff && [...document.getElementById("staff-select").options].some(o=>o.value===a.staff)) document.getElementById("staff-select").value=a.staff;
+                if(!a.staff){
+                    const candidate=staff.find(s=>s.name==="Trang" && s.status==="free");
+                    if(candidate) document.getElementById("staff-select").value=candidate.name;
+                    toast("AI gợi ý KTV Trang cho lịch #"+id);
+                }
+                refreshCheckinState();
+            }
+        }
+
+        function selectRoom(id){
+            document.getElementById("room-select").value=id;
+            refreshCheckinState();
+            document.getElementById("customer-search").focus();
+            toast("Đã chọn "+id+". Hãy chọn khách để check-in.");
+        }
+
+        function cleanRoom(id){
+            const r=rooms.find(x=>x.id===id); r.status="ready"; renderAll(); toast(id+" đã sẵn sàng.");
+        }
+
+        function showRoom(id){
+            const r=rooms.find(x=>x.id===id);
+            openModal(`<div class="p-6"><div class="flex justify-between"><h3 class="text-lg font-bold">Chi tiết ${r.id}</h3><button onclick="closeModal()">✕</button></div>
+            <div class="mt-4 bg-rose-50 rounded-xl p-4 text-sm"><p>Trạng thái: <b>${statusMeta(r.status)[1]}</b></p><p class="mt-2">Sức chứa: ${r.capacity} giường</p></div>
+            <button onclick="closeModal()" class="mt-5 w-full py-2.5 bg-spa-primary text-white rounded-xl text-sm font-bold">Đóng</button></div>`);
+        }
+
+        function refreshCheckinState(){
+            const service=document.getElementById("service-select").value;
+            const room=document.getElementById("room-select").value;
+            const ktv=document.getElementById("staff-select").value;
+            const btn=document.getElementById("checkin-btn");
+            const info=services[service];
+            document.getElementById("duration-preview").textContent=info?info.duration+" phút":"60 phút";
+            document.getElementById("price-preview").textContent=info?money(info.price):"0 ₫";
+            const ok=!!(selectedCustomer&&service&&room&&ktv);
+            btn.disabled=!ok; btn.classList.toggle("opacity-50",!ok); btn.classList.toggle("cursor-not-allowed",!ok);
+        }
+
+        function confirmCheckin(){
+            if(!selectedCustomer) return toast("Vui lòng chọn khách.","error");
+            const roomId=document.getElementById("room-select").value;
+            const ktv=document.getElementById("staff-select").value;
+            const service=document.getElementById("service-select").value;
+            if(!roomId||!ktv||!service) return toast("Vui lòng chọn đủ phòng, KTV và dịch vụ.","error");
+            rooms.find(r=>r.id===roomId).status="busy";
+            const ap=appointments.find(a=>a.id===selectedCustomer.booking);
+            if(ap){ap.status="checkedin";ap.staff=ktv;}
+            staff.find(s=>s.name===ktv).status="busy";
+            openModal(`<div class="p-6 text-center"><div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto"><i class="ph ph-check text-3xl"></i></div>
+            <h3 class="text-xl font-bold mt-4">Check-in thành công</h3><p class="text-sm text-gray-500 mt-2">${selectedCustomer.name} · ${service}</p>
+            <div class="mt-4 bg-gray-50 rounded-xl p-4 text-left text-xs"><p>Phòng: <b>${roomId}</b></p><p class="mt-1">KTV: <b>${ktv}</b></p><p class="mt-1">Giá dự kiến: <b>${money(services[service].price)}</b></p></div>
+            <div class="grid grid-cols-2 gap-2 mt-5"><button onclick="closeModal()" class="py-2.5 border border-pink-200 text-spa-primary rounded-xl text-sm font-bold">Đóng</button><button onclick="printSlip()" class="py-2.5 bg-spa-primary text-white rounded-xl text-sm font-bold">In phiếu</button></div></div>`);
+            renderAll();
+        }
+
+        function printSlip(){ closeModal(); toast("Đã gửi phiếu check-in tới máy in."); }
+
+        function newCustomer(){
+            openModal(`<form onsubmit="saveCustomer(event)" class="p-6"><div class="flex justify-between"><h3 class="text-lg font-bold">Tạo khách hàng mới</h3><button type="button" onclick="closeModal()">✕</button></div>
+            <div class="space-y-3 mt-5"><input id="new-name" required placeholder="Họ và tên" class="w-full p-3 text-sm border border-pink-100 rounded-xl">
+            <input id="new-phone" required placeholder="Số điện thoại" class="w-full p-3 text-sm border border-pink-100 rounded-xl">
+            <select id="new-service" class="w-full p-3 text-sm border border-pink-100 rounded-xl"><option value="">Chọn dịch vụ</option>${Object.keys(services).map(s=>`<option>${s}</option>`).join("")}</select></div>
+            <button class="w-full mt-5 py-3 bg-gradient-to-r from-spa-primary to-spa-secondary text-white rounded-xl font-bold text-sm">Lưu khách hàng</button></form>`);
+        }
+
+        function saveCustomer(e){
+            e.preventDefault();
+            const name=document.getElementById("new-name").value.trim(), phone=document.getElementById("new-phone").value.trim(), service=document.getElementById("new-service").value;
+            const c={id:"KH"+String(customers.length+1).padStart(3,"0"),name,phone,tier:"Khách mới",booking:String(105+customers.length-3),service:service||"Chưa chọn"};
+            customers.push(c); closeModal(); selectCustomer(c.id); toast("Đã tạo hồ sơ "+name);
+        }
+
+        function openQr(){
+            openModal(`<div class="p-6 text-center"><div class="flex justify-between"><h3 class="text-lg font-bold">Quét QR Check-in</h3><button onclick="closeModal()">✕</button></div>
+            <div class="w-48 h-48 border-4 border-pink-100 rounded-2xl mx-auto mt-6 flex items-center justify-center"><i class="ph ph-qr-code text-7xl text-pink-400"></i></div>
+            <p class="text-xs text-gray-500 mt-4">Mô phỏng camera QR. Nhập SĐT hoặc mã đặt hẹn để tiếp tục.</p>
+            <button onclick="closeModal();document.getElementById('customer-search').focus()" class="mt-5 w-full py-2.5 bg-spa-primary text-white rounded-xl text-sm font-bold">Nhập thủ công</button></div>`);
+        }
+
+        function aiSearch(event){
+            if(event.key!=="Enter") return;
+            const q=event.target.value.toLowerCase();
+            if(q.includes("phòng") && (q.includes("trống")||q.includes("rảnh"))){
+                const free=rooms.filter(r=>r.status==="ready").map(r=>r.id).join(", ");
+                toast(free ? "Phòng trống: "+free : "Hiện không có phòng trống.");
+            } else if(q.includes("khách") || q.includes("đặt")){
+                const found=customers.find(c=>q.includes(c.name.toLowerCase()) || q.includes(c.phone));
+                if(found){selectCustomer(found.id);toast("Đã tìm thấy "+found.name);}
+                else toast("Hãy nhập tên/SĐT cụ thể để tìm khách.","error");
+            } else if(q.includes("ktv") || q.includes("kỹ thuật viên")){
+                const free=staff.filter(s=>s.status==="free").map(s=>s.name).join(", ");
+                toast(free ? "KTV đang rảnh: "+free : "Hiện không có KTV rảnh.");
+            } else {
+                toast("AI: Tôi có thể tìm khách, phòng trống hoặc KTV đang rảnh.");
+            }
+        }
+
+        function openModal(content){document.getElementById("modal-card").innerHTML=content;document.getElementById("modal-root").classList.remove("hidden");}
+        function closeModal(){document.getElementById("modal-root").classList.add("hidden");document.getElementById("modal-card").innerHTML="";}
+
+        function updateClock(){
+            const now=new Date(), clockEl=document.getElementById('clock');
+            if(clockEl) clockEl.textContent=String(now.getHours()).padStart(2,'0')+":"+String(now.getMinutes()).padStart(2,'0');
+            const dateEls=document.querySelectorAll('header p.text-xs.text-gray-500');
+            if(dateEls.length) dateEls[0].textContent=now.toLocaleDateString('vi-VN');
+        }
+        setInterval(updateClock,1000); updateClock();
+        document.getElementById("modal-root").addEventListener("click",e=>{if(e.target.id==="modal-root")closeModal();});
+        renderAll();
+    </script>
+</body>
+</html>
