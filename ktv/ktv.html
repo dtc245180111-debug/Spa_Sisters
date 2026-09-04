@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spa Sisters AI - Cổng Kỹ Thuật Viên</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spa: {
+                            bg: '#FFF8F9',        /* Nền kem hồng phấn nhẹ */
+                            primary: '#EC4899',   /* Hồng phấn đậm */
+                            secondary: '#F472B6', /* Hồng phấn mềm */
+                            soft: '#FCE7F3',      /* Hồng pastel nhạt */
+                            card: '#FFFFFF',
+                            text: '#374151'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-spa-bg text-spa-text font-sans h-screen flex flex-col overflow-hidden">
+
+    <!-- ==========================================
+         HEADER KỸ THUẬT VIÊN
+    =========================================== -->
+    <header class="bg-white border-b border-pink-100 px-6 py-3 flex items-center justify-between shadow-sm flex-shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-tr from-spa-primary to-spa-secondary rounded-xl flex items-center justify-center text-white shadow-md shadow-pink-200">
+                <i class="ph ph-hand-sparkles text-2xl"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-base leading-tight text-gray-800">Giao Diện Kỹ Thuật Viên</h1>
+                <p class="text-xs text-pink-500 font-medium">KTV: Nguyễn Linh (Mã: KTV-04)</p>
+            </div>
+        </div>
+
+        <!-- Trạng thái KTV & Đồng hồ -->
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs font-semibold text-gray-700">Đang trong ca làm việc</span>
+            </div>
+            <div class="text-right border-l border-pink-100 pl-4">
+                <p class="text-sm font-bold text-gray-800" id="clock">14:30</p>
+                <p class="text-[10px] text-gray-400" id="currentDate">21/08/2026</p>
+            </div>
+            <button title="Đăng xuất" onclick="logoutTechnician()" class="p-2 text-gray-400 hover:text-rose-500 transition-all">
+                <i class="ph ph-sign-out text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         THANH ĐIỀU HƯỚNG NHIỆM VỤ (TABS NAVIGATION)
+    =========================================== -->
+    <nav class="bg-white border-b border-pink-100 px-6 py-2 flex items-center gap-2 flex-shrink-0">
+        <button id="tab-btn-active" onclick="switchTaskTab('active')" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-spa-soft text-spa-primary border border-pink-200 transition-all">
+            <i class="ph ph-play-circle text-base"></i>
+            1. Ca Đang Làm
+            <span class="bg-spa-primary text-white text-[10px] px-1.5 py-0.2 rounded-full">1</span>
+        </button>
+
+        <button id="tab-btn-schedule" onclick="switchTaskTab('schedule')" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-500 hover:bg-pink-50 hover:text-spa-primary transition-all">
+            <i class="ph ph-calendar-blank text-base"></i>
+            2. Lịch Ca Trong Ngày
+            <span class="bg-gray-200 text-gray-600 text-[10px] px-1.5 py-0.2 rounded-full">3</span>
+        </button>
+
+        <button id="tab-btn-prep" onclick="switchTaskTab('prep')" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-500 hover:bg-pink-50 hover:text-spa-primary transition-all">
+            <i class="ph ph-broom text-base"></i>
+            3. Chuẩn Bị & Dọn Phòng
+            <span class="bg-amber-100 text-amber-700 text-[10px] px-1.5 py-0.2 rounded-full">2</span>
+        </button>
+
+        <button id="tab-btn-history" onclick="switchTaskTab('history')" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-500 hover:bg-pink-50 hover:text-spa-primary transition-all">
+            <i class="ph ph-clock-counter-clockwise text-base"></i>
+            4. Lịch Sử & Đánh Giá
+        </button>
+    </nav>
+
+    <!-- ==========================================
+         NỘI DUNG CHÍNH (THEO NHIỆM VỤ)
+    =========================================== -->
+    <div class="flex-1 overflow-hidden p-6">
+        
+        <!-- ==========================================
+             TAB 1: NHIỆM VỤ CA ĐANG LÀM
+        =========================================== -->
+        <div id="tab-content-active" class="h-full flex flex-col justify-between space-y-4">
+            <div class="grid grid-cols-3 gap-6 overflow-y-auto">
+                
+                <!-- Cột 1: Thông tin khách & AI Note -->
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 bg-gradient-to-tr from-spa-primary to-spa-secondary rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md shadow-pink-200">
+                                HM
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm">Chị Hoàng Mai</h3>
+                                <p class="text-xs text-gray-500">0908 *** 789 • Thẻ VIP Gold</p>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-pink-50/50 rounded-xl border border-pink-100 text-xs space-y-1">
+                            <p class="text-gray-600"><strong>Vị trí:</strong> Phòng VIP 1 - Giường 02</p>
+                            <p class="text-gray-600"><strong>Thời gian:</strong> <span id="activeTimeText">14:30 - 15:30</span> <span id="remainingTime" class="font-semibold text-spa-primary"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-pink-500 to-rose-500 text-white p-4 rounded-2xl shadow-sm space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-xs text-pink-100">
+                            <i class="ph ph-sparkle text-base"></i> LƯU Ý TỪ AI & LỄ TÂN
+                        </div>
+                        <ul class="text-xs space-y-1 text-pink-50 leading-relaxed">
+                            <li>• <strong>Làn da:</strong> Nhạy cảm, vừa dùng Laser tuần trước.</li>
+                            <li>• <strong>Cài đặt:</strong> Dùng máy triệt mức năng lượng nhẹ.</li>
+                            <li>• <strong>Yêu cầu:</strong> Thích massage lực vừa.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cột 2: Tiến độ liệu trình (Checklist) -->
+                <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-3">
+                    <h3 class="font-bold text-sm text-gray-800 flex items-center gap-2">
+                        <i class="ph ph-list-checks text-spa-primary text-lg"></i> Tiến Độ Dịch Vụ
+                    </h3>
+
+                    <div class="space-y-2 text-xs" id="serviceSteps">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="flex items-center gap-3">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold">1</span>
+                                <span class="line-through text-gray-400">Tẩy trang & Làm sạch da</span>
+                            </div>
+                            <span class="text-emerald-600 font-semibold text-[11px]">Xong</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-pink-50/50 rounded-xl border border-pink-200">
+                            <div class="flex items-center gap-3">
+                                <span class="w-6 h-6 rounded-full bg-spa-primary text-white flex items-center justify-center text-xs font-bold">2</span>
+                                <span class="font-bold text-gray-800">Bắn Triệt Lông Laser 808nm</span>
+                            </div>
+                            <span class="text-spa-primary font-bold text-[11px] animate-pulse">Đang làm...</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="flex items-center gap-3">
+                                <span class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold">3</span>
+                                <span class="text-gray-600">Thoa Gel dịu da & Dưỡng ẩm</span>
+                            </div>
+                            <span class="text-gray-400 text-[11px]">Chưa bắt đầu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cột 3: Ghi chú post-service & Báo dọn -->
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-2xl border border-pink-100 shadow-sm space-y-2">
+                        <label class="block text-xs font-semibold text-gray-700">Ghi chú phản ứng da của khách</label>
+                        <textarea id="skinNote" rows="4" placeholder="Nhập tình trạng da khách hàng sau buổi làm..." 
+                                  class="w-full text-xs p-3 bg-pink-50/30 border border-pink-100 rounded-xl focus:outline-none focus:border-spa-primary focus:bg-white transition-all"></textarea>
+                    </div>
+
+                    <div class="bg-pink-50 p-4 rounded-2xl border border-pink-200 text-xs text-gray-600 space-y-1">
+                        <p class="font-bold text-spa-primary flex items-center gap-1">
+                            <i class="ph ph-info"></i> Tự Động Báo Dọn Phòng
+                        </p>
+                        <p>Khi bấm "Hoàn Thành", hệ thống sẽ tự động gửi thông báo dọn dẹp đến bộ phận buồng phòng.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Nút thao tác ca làm -->
+            <div class="pt-4 border-t border-pink-200 flex items-center gap-4">
+                <button onclick="openSupportModal()" class="w-1/3 py-3 bg-pink-100 text-spa-primary font-bold text-xs rounded-xl hover:bg-pink-200 transition-all flex items-center justify-center gap-2">
+                    <i class="ph ph-bell text-lg"></i> Gọi Lễ Tân Hỗ Trợ
+                </button>
+                <button id="completeServiceBtn" onclick="completeService()" class="w-2/3 py-3 bg-gradient-to-r from-spa-primary to-spa-secondary text-white font-bold text-sm rounded-xl shadow-lg shadow-pink-200 hover:opacity-95 transition-all flex items-center justify-center gap-2">
+                    <i class="ph ph-check-circle text-xl"></i> Hoàn Thành Dịch Vụ & Báo Lễ Tân
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ==========================================
+             TAB 2: LỊCH CA TRONG NGÀY
+        =========================================== -->
+        <div id="tab-content-schedule" class="h-full hidden overflow-y-auto space-y-4">
+            <h2 class="font-bold text-base text-gray-800">Danh Sách Ca Làm Việc Được Phân Công</h2>
+            
+            <div class="grid grid-cols-3 gap-4">
+                <div class="p-4 rounded-2xl bg-white border-2 border-spa-primary shadow-sm relative">
+                    <span class="bg-rose-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold absolute top-4 right-4">ĐANG THỰC HIỆN</span>
+                    <span class="text-xs font-bold text-spa-primary">14:30 - 15:30</span>
+                    <h3 class="font-bold text-gray-800 text-sm mt-2">Chị Hoàng Mai</h3>
+                    <p class="text-xs text-gray-500 mt-1">Triệt lông vĩnh viễn • VIP 1</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white border border-pink-100 shadow-sm relative">
+                    <span class="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-bold absolute top-4 right-4">CA TIẾP THEO</span>
+                    <span class="text-xs font-bold text-gray-600">16:00 - 17:00</span>
+                    <h3 class="font-bold text-gray-800 text-sm mt-2">Chị Phương Thảo</h3>
+                    <p class="text-xs text-gray-500 mt-1">Massage cổ vai gáy Thụy Điển • Room Body 2</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 opacity-60 relative">
+                    <span class="bg-gray-200 text-gray-600 text-[10px] px-2 py-0.5 rounded-full font-bold absolute top-4 right-4">ĐÃ HOÀN THÀNH</span>
+                    <span class="text-xs font-bold text-gray-400">13:00 - 14:00</span>
+                    <h3 class="font-bold text-gray-700 text-sm mt-2">Chị Lê Thu</h3>
+                    <p class="text-xs text-gray-400 mt-1">Chăm sóc da mặt HA Phục hồi</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ==========================================
+             TAB 3: CHUẨN BỊ & DỌN PHÒNG
+        =========================================== -->
+        <div id="tab-content-prep" class="h-full hidden overflow-y-auto space-y-4">
+            <h2 class="font-bold text-base text-gray-800">Nhiệm Vụ Chuẩn Bị Vật Tư & Vệ Sinh Phòng</h2>
+            
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Vệ sinh phòng -->
+                <div class="bg-white p-5 rounded-2xl border border-pink-100 space-y-3">
+                    <h3 class="font-bold text-xs text-gray-800 flex items-center gap-2">
+                        <i class="ph ph-broom text-spa-primary text-base"></i> Checklist Chuẩn Bị Phòng Body 2 (Cho ca 16:00)
+                    </h3>
+                    <div class="space-y-2 text-xs">
+                        <label class="flex items-center gap-2 p-2.5 bg-pink-50/30 rounded-xl border border-pink-100 cursor-pointer">
+                            <input type="checkbox" checked onchange="savePrepChecklist()" class="prep-check accent-spa-primary w-4 h-4 rounded"> Thay khăn ga & vỏ gối mới
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-pink-50/30 rounded-xl border border-pink-100 cursor-pointer">
+                            <input type="checkbox" checked onchange="savePrepChecklist()" class="prep-check accent-spa-primary w-4 h-4 rounded"> Xông tinh dầu Oải Hương
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-pink-50/30 rounded-xl border border-pink-100 cursor-pointer">
+                            <input type="checkbox" onchange="savePrepChecklist()" class="prep-check accent-spa-primary w-4 h-4 rounded"> Tiệt trùng đá nóng massage
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Vật tư -->
+                <div class="bg-white p-5 rounded-2xl border border-pink-100 space-y-3">
+                    <h3 class="font-bold text-xs text-gray-800 flex items-center gap-2">
+                        <i class="ph ph-package text-spa-primary text-base"></i> Lấy Vật Tư Từ Kho Sau
+                    </h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between items-center p-2.5 bg-pink-50/30 rounded-xl border border-pink-100">
+                            <span>Tinh dầu Massage Thụy Điển</span>
+                            <span class="font-bold text-spa-primary">1 Chai 250ml</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2.5 bg-pink-50/30 rounded-xl border border-pink-100">
+                            <span>Kem dưỡng ẩm khóa ẩm HA</span>
+                            <span class="font-bold text-spa-primary">1 Hũ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ==========================================
+             TAB 4: LỊCH SỬ & ĐÁNH GIÁ
+        =========================================== -->
+        <div id="tab-content-history" class="h-full hidden overflow-y-auto space-y-4">
+            <h2 class="font-bold text-base text-gray-800">Lịch Sử Phục Vụ & Đánh Giá Từ Khách Hàng</h2>
+            
+            <div class="bg-white p-4 rounded-2xl border border-pink-100 space-y-3">
+                <div class="flex justify-between items-center p-3 bg-pink-50/30 rounded-xl border border-pink-100 text-xs">
+                    <div>
+                        <p class="font-bold text-gray-800">Chị Lê Thu • Chăm sóc da mặt HA</p>
+                        <p class="text-gray-400">13:00 - 21/08/2026</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-amber-400 font-bold">★★★★★ (5.0)</div>
+                        <p class="text-[10px] text-gray-500">"KTV làm rất êm, tư vấn nhiệt tình!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         POPUP / TOAST
+    =========================================== -->
+    <div id="toast" class="fixed top-5 right-5 z-[100] hidden max-w-sm rounded-xl bg-gray-900 text-white px-4 py-3 text-xs shadow-xl"></div>
+
+    <div id="supportModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+        <div class="w-full max-w-md rounded-2xl bg-white border border-pink-100 shadow-2xl p-5">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-gray-800">Gọi Lễ Tân Hỗ Trợ</h3>
+                <button onclick="closeSupportModal()" class="p-1 text-gray-400 hover:text-rose-500">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+            <label class="text-xs font-semibold text-gray-600">Nội dung cần hỗ trợ</label>
+            <select id="supportReason" class="mt-2 w-full rounded-xl border border-pink-100 bg-pink-50/40 px-3 py-2.5 text-xs outline-none focus:border-spa-primary">
+                <option>Khách cần hỗ trợ</option>
+                <option>Cần thêm dụng cụ / vật tư</option>
+                <option>Cần đổi phòng</option>
+                <option>Khách có phản ứng cần lễ tân phối hợp</option>
+                <option>Vấn đề khác</option>
+            </select>
+            <textarea id="supportDetail" rows="3" class="mt-3 w-full rounded-xl border border-pink-100 p-3 text-xs outline-none focus:border-spa-primary" placeholder="Mô tả thêm (không bắt buộc)..."></textarea>
+            <div class="mt-4 flex gap-2">
+                <button onclick="closeSupportModal()" class="w-1/3 rounded-xl bg-gray-100 py-2.5 text-xs font-bold text-gray-600">Hủy</button>
+                <button onclick="sendSupportRequest()" class="w-2/3 rounded-xl bg-spa-primary py-2.5 text-xs font-bold text-white">Gửi yêu cầu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="scheduleModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+        <div class="w-full max-w-lg rounded-2xl bg-white border border-pink-100 shadow-2xl p-5">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-gray-800">Chi Tiết Ca Làm</h3>
+                <button onclick="closeScheduleModal()" class="p-1 text-gray-400 hover:text-rose-500"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <div id="scheduleDetail" class="space-y-2 text-xs text-gray-600"></div>
+            <div class="mt-4 flex justify-end">
+                <button id="startShiftBtn" onclick="startSelectedShift()" class="hidden rounded-xl bg-spa-primary px-5 py-2.5 text-xs font-bold text-white">Bắt đầu ca này</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         JAVASCRIPT CHỨC NĂNG KỸ THUẬT VIÊN
+    =========================================== -->
+    <script>
+        const STORAGE_KEY = 'spaTechnicianDemo_v2';
+
+        const defaultState = {
+            activeShiftId: 'shift-2',
+            selectedScheduleId: null,
+            supportRequests: [],
+            prepChecklist: [true, true, false],
+            shifts: [
+                {
+                    id: 'shift-1',
+                    time: '13:00 - 14:00',
+                    customer: 'Chị Lê Thu',
+                    phone: '0912 *** 456',
+                    service: 'Chăm sóc da mặt HA Phục hồi',
+                    room: 'Phòng Facial 1',
+                    status: 'completed',
+                    note: 'Da ổn định, đủ ẩm sau liệu trình.',
+                    rating: 5,
+                    review: 'KTV làm rất êm, tư vấn nhiệt tình!'
+                },
+                {
+                    id: 'shift-2',
+                    time: '14:30 - 15:30',
+                    customer: 'Chị Hoàng Mai',
+                    phone: '0908 *** 789',
+                    service: 'Triệt lông vĩnh viễn',
+                    room: 'Phòng VIP 1 - Giường 02',
+                    status: 'active',
+                    note: '',
+                    steps: [
+                        { name: 'Tẩy trang & Làm sạch da', status: 'done' },
+                        { name: 'Bắn Triệt Lông Laser 808nm', status: 'doing' },
+                        { name: 'Thoa Gel dịu da & Dưỡng ẩm', status: 'pending' }
+                    ]
+                },
+                {
+                    id: 'shift-3',
+                    time: '16:00 - 17:00',
+                    customer: 'Chị Phương Thảo',
+                    phone: '0936 *** 128',
+                    service: 'Massage cổ vai gáy Thụy Điển',
+                    room: 'Room Body 2',
+                    status: 'upcoming',
+                    note: '',
+                    steps: [
+                        { name: 'Chuẩn bị khăn & tinh dầu', status: 'pending' },
+                        { name: 'Massage cổ vai gáy', status: 'pending' },
+                        { name: 'Thả lỏng & hướng dẫn sau liệu trình', status: 'pending' }
+                    ]
+                }
+            ],
+            roomTasks: []
+        };
+
+        function deepClone(v) {
+            return JSON.parse(JSON.stringify(v));
+        }
+
+        function loadState() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                return saved && saved.shifts ? saved : deepClone(defaultState);
+            } catch (_) {
+                return deepClone(defaultState);
+            }
+        }
+
+        let appState = loadState();
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            const icons = {
+                success: '<i class="ph ph-check-circle text-emerald-300 text-lg"></i>',
+                warning: '<i class="ph ph-warning-circle text-amber-300 text-lg"></i>',
+                info: '<i class="ph ph-info text-pink-300 text-lg"></i>'
+            };
+            toast.innerHTML = `<div class="flex items-center gap-2">${icons[type] || icons.info}<span>${message}</span></div>`;
+            toast.classList.remove('hidden');
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer = setTimeout(() => toast.classList.add('hidden'), 3200);
+        }
+
+        function switchTaskTab(tabName) {
+            const tabs = ['active', 'schedule', 'prep', 'history'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-btn-${t}`);
+                const content = document.getElementById(`tab-content-${t}`);
+                if (!btn || !content) return;
+
+                if (t === tabName) {
+                    btn.className = "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-spa-soft text-spa-primary border border-pink-200 transition-all";
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-500 hover:bg-pink-50 hover:text-spa-primary transition-all";
+                    content.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'schedule') renderSchedule();
+            if (tabName === 'history') renderHistory();
+            if (tabName === 'prep') restorePrepChecklist();
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const clockEl = document.getElementById('clock');
+            const dateEl = document.getElementById('currentDate');
+            if (clockEl) clockEl.textContent = `${hours}:${minutes}`;
+            if (dateEl) dateEl.textContent = now.toLocaleDateString('vi-VN');
+            updateRemainingTime();
+        }
+
+        function getActiveShift() {
+            return appState.shifts.find(s => s.id === appState.activeShiftId && s.status === 'active');
+        }
+
+        function renderActiveSteps() {
+            const container = document.getElementById('serviceSteps');
+            const active = getActiveShift();
+            if (!container) return;
+
+            if (!active) {
+                container.innerHTML = `
+                    <div class="rounded-xl border border-dashed border-pink-200 p-6 text-center">
+                        <i class="ph ph-coffee text-3xl text-pink-300"></i>
+                        <p class="mt-2 font-bold text-gray-700">Hiện chưa có ca đang thực hiện</p>
+                        <p class="mt-1 text-[11px] text-gray-400">Mở “Lịch Ca Trong Ngày” để bắt đầu ca tiếp theo.</p>
+                    </div>`;
+                const btn = document.getElementById('completeServiceBtn');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                return;
+            }
+
+            if (!active.steps) active.steps = [];
+            container.innerHTML = active.steps.map((step, index) => {
+                const isDone = step.status === 'done';
+                const isDoing = step.status === 'doing';
+                const circle = isDone ? 'bg-emerald-500 text-white' : isDoing ? 'bg-spa-primary text-white' : 'bg-gray-200 text-gray-600';
+                const box = isDoing ? 'bg-pink-50/50 border-pink-200' : 'bg-gray-50 border-gray-100';
+                const labelClass = isDone ? 'line-through text-gray-400' : isDoing ? 'font-bold text-gray-800' : 'text-gray-600';
+                const statusText = isDone ? 'Xong' : isDoing ? 'Đang làm...' : 'Chưa bắt đầu';
+                const statusClass = isDone ? 'text-emerald-600' : isDoing ? 'text-spa-primary animate-pulse' : 'text-gray-400';
+                const canClick = isDoing || (step.status === 'pending' && index === active.steps.findIndex(x => x.status !== 'done'));
+
+                return `
+                    <button ${canClick ? `onclick="advanceStep(${index})"` : ''} class="w-full flex items-center justify-between p-3 rounded-xl border ${box} ${canClick ? 'hover:shadow-sm cursor-pointer' : 'cursor-default'} transition-all text-left">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full ${circle} flex items-center justify-center text-xs font-bold">${index + 1}</span>
+                            <span class="${labelClass}">${step.name}</span>
+                        </div>
+                        <span class="${statusClass} font-semibold text-[11px]">${statusText}</span>
+                    </button>`;
+            }).join('');
+
+            const btn = document.getElementById('completeServiceBtn');
+            if (btn) {
+                const allDone = active.steps.length > 0 && active.steps.every(s => s.status === 'done');
+                btn.disabled = !allDone;
+                btn.classList.toggle('opacity-50', !allDone);
+                btn.classList.toggle('cursor-not-allowed', !allDone);
+                btn.title = allDone ? 'Hoàn thành dịch vụ' : 'Cần hoàn tất tất cả các bước trước';
+            }
+
+            const note = document.getElementById('skinNote');
+            if (note) note.value = active.note || '';
+        }
+
+        function advanceStep(index) {
+            const active = getActiveShift();
+            if (!active || !active.steps[index]) return;
+
+            const step = active.steps[index];
+            if (step.status === 'doing') {
+                step.status = 'done';
+                const next = active.steps[index + 1];
+                if (next && next.status === 'pending') next.status = 'doing';
+                showToast(`Đã hoàn thành: ${step.name}`, 'success');
+            } else if (step.status === 'pending') {
+                const previousDone = active.steps.slice(0, index).every(s => s.status === 'done');
+                if (!previousDone) {
+                    showToast('Hãy hoàn thành các bước trước đó trước.', 'warning');
+                    return;
+                }
+                step.status = 'doing';
+            }
+
+            saveState();
+            renderActiveSteps();
+        }
+
+        function completeService() {
+            const active = getActiveShift();
+            if (!active) {
+                showToast('Không có ca đang thực hiện.', 'warning');
+                return;
+            }
+
+            if (!active.steps || !active.steps.every(s => s.status === 'done')) {
+                showToast('Bạn cần hoàn thành toàn bộ các bước dịch vụ trước.', 'warning');
+                return;
+            }
+
+            const noteEl = document.getElementById('skinNote');
+            active.note = noteEl ? noteEl.value.trim() : '';
+            active.status = 'completed';
+            active.completedAt = new Date().toISOString();
+
+            appState.roomTasks.unshift({
+                id: 'room-' + Date.now(),
+                room: active.room,
+                type: 'Dọn phòng sau dịch vụ',
+                status: 'waiting',
+                createdAt: new Date().toISOString()
+            });
+
+            appState.activeShiftId = null;
+            saveState();
+            renderActiveSteps();
+            renderSchedule();
+            renderHistory();
+            showToast('Đã hoàn thành dịch vụ, báo lễ tân và tạo yêu cầu dọn phòng.', 'success');
+        }
+
+        function renderSchedule() {
+            const wrapper = document.querySelector('#tab-content-schedule .grid');
+            if (!wrapper) return;
+
+            const statusMeta = {
+                active: ['ĐANG THỰC HIỆN', 'bg-rose-500 text-white', 'border-2 border-spa-primary'],
+                upcoming: ['CA TIẾP THEO', 'bg-blue-100 text-blue-700', 'border border-pink-100'],
+                completed: ['ĐÃ HOÀN THÀNH', 'bg-gray-200 text-gray-600', 'border border-gray-200 opacity-70']
+            };
+
+            wrapper.innerHTML = appState.shifts.map(shift => {
+                const m = statusMeta[shift.status] || statusMeta.upcoming;
+                return `
+                    <button onclick="openScheduleModal('${shift.id}')" class="text-left p-4 rounded-2xl bg-white ${m[2]} shadow-sm relative hover:-translate-y-0.5 hover:shadow-md transition-all">
+                        <span class="${m[1]} text-[10px] px-2 py-0.5 rounded-full font-bold absolute top-4 right-4">${m[0]}</span>
+                        <span class="text-xs font-bold ${shift.status === 'active' ? 'text-spa-primary' : 'text-gray-600'}">${shift.time}</span>
+                        <h3 class="font-bold text-gray-800 text-sm mt-2 pr-24">${shift.customer}</h3>
+                        <p class="text-xs text-gray-500 mt-1">${shift.service} • ${shift.room}</p>
+                    </button>`;
+            }).join('');
+        }
+
+        function openScheduleModal(id) {
+            const shift = appState.shifts.find(s => s.id === id);
+            if (!shift) return;
+            appState.selectedScheduleId = id;
+
+            const statusText = shift.status === 'active' ? 'Đang thực hiện' : shift.status === 'completed' ? 'Đã hoàn thành' : 'Chưa bắt đầu';
+            document.getElementById('scheduleDetail').innerHTML = `
+                <div class="rounded-xl bg-pink-50/50 border border-pink-100 p-4 space-y-2">
+                    <p><strong>Khách:</strong> ${shift.customer}</p>
+                    <p><strong>Số điện thoại:</strong> ${shift.phone || '—'}</p>
+                    <p><strong>Dịch vụ:</strong> ${shift.service}</p>
+                    <p><strong>Phòng:</strong> ${shift.room}</p>
+                    <p><strong>Thời gian:</strong> ${shift.time}</p>
+                    <p><strong>Trạng thái:</strong> ${statusText}</p>
+                </div>`;
+
+            const startBtn = document.getElementById('startShiftBtn');
+            const hasActive = !!getActiveShift();
+            startBtn.classList.toggle('hidden', shift.status !== 'upcoming' || hasActive);
+
+            const modal = document.getElementById('scheduleModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeScheduleModal() {
+            const modal = document.getElementById('scheduleModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function startSelectedShift() {
+            const shift = appState.shifts.find(s => s.id === appState.selectedScheduleId);
+            if (!shift || shift.status !== 'upcoming') return;
+            if (getActiveShift()) {
+                showToast('Hãy hoàn thành ca hiện tại trước.', 'warning');
+                return;
+            }
+
+            shift.status = 'active';
+            if (shift.steps && shift.steps.length && !shift.steps.some(s => s.status === 'doing')) {
+                shift.steps[0].status = 'doing';
+            }
+            appState.activeShiftId = shift.id;
+            saveState();
+            closeScheduleModal();
+            renderSchedule();
+            renderActiveSteps();
+            switchTaskTab('active');
+            showToast(`Đã bắt đầu ca của ${shift.customer}.`, 'success');
+        }
+
+        function openSupportModal() {
+            const modal = document.getElementById('supportModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeSupportModal() {
+            const modal = document.getElementById('supportModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function sendSupportRequest() {
+            const reason = document.getElementById('supportReason').value;
+            const detail = document.getElementById('supportDetail').value.trim();
+            appState.supportRequests.unshift({
+                id: 'support-' + Date.now(),
+                reason,
+                detail,
+                status: 'sent',
+                createdAt: new Date().toISOString()
+            });
+            saveState();
+            document.getElementById('supportDetail').value = '';
+            closeSupportModal();
+            showToast('Đã gửi yêu cầu hỗ trợ đến lễ tân.', 'success');
+        }
+
+        function savePrepChecklist() {
+            appState.prepChecklist = [...document.querySelectorAll('.prep-check')].map(c => c.checked);
+            saveState();
+            const allDone = appState.prepChecklist.length && appState.prepChecklist.every(Boolean);
+            showToast(allDone ? 'Checklist chuẩn bị phòng đã hoàn tất.' : 'Đã lưu trạng thái checklist.', allDone ? 'success' : 'info');
+        }
+
+        function restorePrepChecklist() {
+            const boxes = [...document.querySelectorAll('.prep-check')];
+            boxes.forEach((box, i) => {
+                if (typeof appState.prepChecklist[i] === 'boolean') box.checked = appState.prepChecklist[i];
+            });
+        }
+
+        function renderHistory() {
+            const wrapper = document.querySelector('#tab-content-history .bg-white');
+            if (!wrapper) return;
+            const completed = appState.shifts.filter(s => s.status === 'completed').slice().reverse();
+
+            wrapper.innerHTML = completed.length ? completed.map(shift => {
+                const rating = shift.rating || 0;
+                const stars = rating ? '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating)) : 'Chưa có đánh giá';
+                return `
+                    <div class="flex justify-between items-center p-3 bg-pink-50/30 rounded-xl border border-pink-100 text-xs gap-4">
+                        <div>
+                            <p class="font-bold text-gray-800">${shift.customer} • ${shift.service}</p>
+                            <p class="text-gray-400">${shift.time}${shift.completedAt ? ' • ' + new Date(shift.completedAt).toLocaleDateString('vi-VN') : ''}</p>
+                            ${shift.note ? `<p class="mt-1 text-[11px] text-gray-500"><strong>Ghi chú:</strong> ${escapeHtml(shift.note)}</p>` : ''}
+                        </div>
+                        <div class="text-right flex-shrink-0">
+                            <div class="text-amber-400 font-bold">${stars}${rating ? ` (${rating.toFixed(1)})` : ''}</div>
+                            <p class="text-[10px] text-gray-500">${shift.review ? `"${escapeHtml(shift.review)}"` : 'Chưa có nhận xét'}</p>
+                        </div>
+                    </div>`;
+            }).join('') : '<div class="text-center text-xs text-gray-400 py-8">Chưa có lịch sử hoàn thành.</div>';
+        }
+
+        function updateRemainingTime() {
+            const active = getActiveShift();
+            const el = document.getElementById('remainingTime');
+            if (!el || !active) {
+                if (el) el.textContent = '';
+                return;
+            }
+
+            const match = active.time.match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/);
+            if (!match) return;
+
+            const now = new Date();
+            const end = new Date();
+            end.setHours(Number(match[3]), Number(match[4]), 0, 0);
+            const diff = Math.ceil((end - now) / 60000);
+
+            if (diff > 0) el.textContent = `(Còn ${diff}p)`;
+            else if (diff === 0) el.textContent = '(Sắp hết giờ)';
+            else el.textContent = `(Quá ${Math.abs(diff)}p)`;
+        }
+
+        function logoutTechnician() {
+            const ok = confirm('Bạn có muốn đăng xuất khỏi cổng kỹ thuật viên không?');
+            if (ok) showToast('Đã ghi nhận yêu cầu đăng xuất (demo frontend).', 'info');
+        }
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        // Lưu ghi chú ngay khi nhập.
+        document.addEventListener('input', (e) => {
+            if (e.target && e.target.id === 'skinNote') {
+                const active = getActiveShift();
+                if (active) {
+                    active.note = e.target.value;
+                    saveState();
+                }
+            }
+        });
+
+        // Đóng popup khi bấm ra ngoài.
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'supportModal') closeSupportModal();
+            if (e.target && e.target.id === 'scheduleModal') closeScheduleModal();
+        });
+
+        setInterval(updateClock, 1000);
+        updateClock();
+        restorePrepChecklist();
+        renderActiveSteps();
+        renderSchedule();
+        renderHistory();
+    </script>
+</body>
+</html>
