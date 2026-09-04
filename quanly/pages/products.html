@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Sản phẩm & Kho - Spa Sisters</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    /* Ép khung bảng không bị vỡ layout */
+    .card table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+    }
+    .card table th {
+      background-color: #fcf4f6;
+      color: #666;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 10px 8px;
+    }
+    .card table td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #f2f2f2;
+      vertical-align: middle;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card table td:last-child {
+      white-space: nowrap;
+      text-align: right;
+    }
+    .card table td button.btn.small {
+      padding: 3px 6px !important;
+      font-size: 11px !important;
+      line-height: 1.2 !important;
+      margin-left: 2px !important;
+    }
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(2px);
+    }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      width: 480px;
+      max-width: 90%;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    /* Badges trạng thái kho */
+    .badge-success { background: #d4edda; color: #155724; padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+    .badge-warning { background: #fff3cd; color: #856404; padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+    .badge-danger { background: #f8d7da; color: #721c24; padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><img src="../image/Logo_spa.png" alt="Logo Spa" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <span class="label">Spa Sisters</span><span class="role">RECEPTION</span>
+      </div>
+      <div class="nav-section">Tổng quan</div>
+      <div class="nav">
+        <a href="dashboard.html"><span class="icon">⌂</span><span class="label">Dashboard</span></a>
+        <a href="appointments.html"><span class="icon">◷</span><span class="label">Lịch hẹn</span></a>
+        <a href="customers.html"><span class="icon">♙</span><span class="label">Khách hàng</span></a>
+      </div>
+      <div class="nav-section">Vận hành</div>
+      <div class="nav">
+        <a href="pos.html"><span class="icon">▣</span><span class="label">Thanh toán / POS</span></a>
+        <a href="services.html"><span class="icon">◇</span><span class="label">Dịch vụ & gói</span></a>
+        <a href="products.html" class="active"><span class="icon">▤</span><span class="label">Sản phẩm & kho</span></a>
+      </div>
+      <div class="nav-section">AI Assistant</div>
+      <div class="nav">
+        <a href="ai-recommend.html"><span class="icon">✦</span><span class="label">Gợi ý dịch vụ</span></a>
+        <a href="ai-outreach.html"><span class="icon">◌</span><span class="label">Tin nhắn CSKH</span></a>
+      </div>
+      <div class="nav-section">Quản trị</div>
+      <div class="nav">
+        <a href="staff.html"><span class="icon">♟</span><span class="label">Nhân viên & quyền</span></a>
+        <a href="reports.html"><span class="icon">▥</span><span class="label">Báo cáo</span></a>
+        <a href="settings.html"><span class="icon">⚙</span><span class="label">Cài đặt</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Danh mục / Sản phẩm & kho</div>
+        <div class="top-actions">
+          <a href="appointments.html" class="btn small">+ Lịch mới</a>
+          <span>🔔</span>
+          <div class="avatar">LH</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Sản phẩm & kho</h1>
+            <p class="sub">Giá bán · giá vốn · tồn kho theo thời gian thực</p>
+          </div>
+          <button class="btn primary" onclick="openProductModal('add')">+ Thêm sản phẩm</button>
+        </div>
+
+        <!-- THẺ KPI TỰ ĐỘNG TÍNH TOÁN -->
+        <div class="grid kpi-grid">
+          <div class="card"><div class="kpi-label">Tổng SKU</div><div class="kpi-value" id="kpiTotalSku">0</div></div>
+          <div class="card"><div class="kpi-label">Giá trị tồn kho</div><div class="kpi-value" id="kpiTotalValue">0 ₫</div></div>
+          <div class="card"><div class="kpi-label">Sắp hết</div><div class="kpi-value" id="kpiLowStock">0</div></div>
+          <div class="card"><div class="kpi-label">Hết hàng</div><div class="kpi-value" id="kpiOutOfStock">0</div></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <!-- THANH TÌM KIẾM VÀ LỌC -->
+          <div class="searchbar" style="display:flex; gap:10px; margin-bottom:15px;">
+            <input class="input" id="searchProductInput" placeholder="🔎 Tìm sản phẩm..." oninput="filterProducts()">
+            <select class="input" id="stockFilter" style="max-width:180px" onchange="filterProducts()">
+              <option value="ALL">Tất cả trạng thái kho</option>
+              <option value="STABLE">Ổn định</option>
+              <option value="LOW">Sắp hết (≤ 5)</option>
+              <option value="OUT">Hết hàng (0)</option>
+            </select>
+          </div>
+
+          <!-- BẢNG TỒN KHO SẢN PHẨM -->
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 28%;">Sản phẩm</th>
+                <th style="width: 15%;">Giá bán</th>
+                <th style="width: 15%;">Giá vốn</th>
+                <th style="width: 12%; text-align: center;">Tồn kho</th>
+                <th style="width: 15%;">Trạng thái</th>
+                <th style="width: 15%; text-align: right;">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <!-- JS Render -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL THÊM / SỬA SẢN PHẨM -->
+  <div id="productModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="productModalTitle" style="margin:0;">Thêm sản phẩm</h3>
+        <button onclick="closeModal('productModal')" style="border:none; background:none; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div>
+        <input type="hidden" id="editProductId">
+        <div class="field">
+          <label>Tên sản phẩm</label>
+          <input type="text" id="prodName" class="input" placeholder="Nhập tên sản phẩm">
+        </div>
+        <div class="field" style="margin-top:10px;">
+          <label>Giá bán (VNĐ)</label>
+          <input type="number" id="prodPrice" class="input" placeholder="480000">
+        </div>
+        <div class="field" style="margin-top:10px;">
+          <label>Giá vốn (VNĐ)</label>
+          <input type="number" id="prodCost" class="input" placeholder="280000">
+        </div>
+        <div class="field" style="margin-top:10px;">
+          <label>Số lượng tồn kho</label>
+          <input type="number" id="prodStock" class="input" value="0" min="0">
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+        <button class="btn" onclick="closeModal('productModal')">Hủy</button>
+        <button class="btn primary" onclick="saveProduct()">Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL NHẬP HÀNG NHANH -->
+  <div id="importModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 style="margin:0;">Nhập thêm hàng</h3>
+        <button onclick="closeModal('importModal')" style="border:none; background:none; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div>
+        <input type="hidden" id="importProductId">
+        <p><b id="importProductName"></b></p>
+        <div class="field" style="margin-top:10px;">
+          <label>Số lượng nhập thêm</label>
+          <input type="number" id="importQuantity" class="input" value="10" min="1">
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+        <button class="btn" onclick="closeModal('importModal')">Hủy</button>
+        <button class="btn primary" onclick="confirmImport()">Xác nhận nhập</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL XEM CHI TIẾT SẢN PHẨM -->
+  <div id="detailProductModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 style="margin:0;">Chi tiết sản phẩm</h3>
+        <button onclick="closeModal('detailProductModal')" style="border:none; background:none; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div id="detailProductBody"></div>
+      <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+        <button class="btn primary" onclick="closeModal('detailProductModal')">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/products.js"></script>
+</body>
+</html>

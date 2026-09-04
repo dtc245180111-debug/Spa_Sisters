@@ -1,0 +1,30 @@
+.profile {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 18px;
+}
+.profile-side { text-align: center; }
+
+.portrait {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 8px auto;
+  background: var(--beige);
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.metric {
+  padding: 12px;
+  background: var(--sand);
+  border-radius: 10px;
+  margin-top: 8px;
+  text-align: left;
+}
+
+@media(max-width:1000px){
+  .profile { grid-template-columns: 1fr; }
+}

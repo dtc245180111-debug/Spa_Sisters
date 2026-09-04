@@ -1,0 +1,26 @@
+.calendar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+}
+.date-nav { display: flex; gap: 5px; }
+
+.daytabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.daytabs button {
+  border: 0;
+  background: none;
+  padding: 10px 16px;
+  color: #796c61;
+}
+
+.daytabs button.active {
+  color: var(--espresso);
+  font-weight: 800;
+  border-bottom: 2px solid var(--taupe);
+}

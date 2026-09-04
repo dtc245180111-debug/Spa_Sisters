@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Lịch hẹn - Spa Sisters</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/appointments.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><img src="../image/Logo_spa.png" alt="Logo Spa" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <span class="label">Spa Sisters</span><span class="role">RECEPTION</span>
+      </div>
+      <div class="nav-section">Tổng quan</div>
+      <div class="nav">
+        <a href="dashboard.html"><span class="icon">⌂</span><span class="label">Dashboard</span></a>
+        <a href="appointments.html" class="active"><span class="icon">◷</span><span class="label">Lịch hẹn</span></a>
+        <a href="customers.html"><span class="icon">♙</span><span class="label">Khách hàng</span></a>
+      </div>
+      <div class="nav-section">Vận hành</div>
+      <div class="nav">
+        <a href="pos.html"><span class="icon">▣</span><span class="label">Thanh toán / POS</span></a>
+        <a href="services.html"><span class="icon">◇</span><span class="label">Dịch vụ & gói</span></a>
+        <a href="products.html"><span class="icon">▤</span><span class="label">Sản phẩm & kho</span></a>
+      </div>
+      <div class="nav-section">AI Assistant</div>
+      <div class="nav">
+        <a href="ai-recommend.html"><span class="icon">✦</span><span class="label">Gợi ý dịch vụ</span></a>
+        <a href="ai-outreach.html"><span class="icon">◌</span><span class="label">Tin nhắn CSKH</span></a>
+      </div>
+      <div class="nav-section">Quản trị</div>
+      <div class="nav">
+        <a href="staff.html"><span class="icon">♟</span><span class="label">Nhân viên & quyền</span></a>
+        <a href="reports.html"><span class="icon">▥</span><span class="label">Báo cáo</span></a>
+        <a href="settings.html"><span class="icon">⚙</span><span class="label">Cài đặt</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Vận hành / Lịch hẹn</div>
+        <div class="top-actions">
+          <button class="btn small" onclick="openModal('appointmentModal')">+ Lịch mới</button>
+          <span>🔔</span>
+          <div class="avatar">LH</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Lịch hẹn</h1>
+            <p class="sub">Calendar / Timeline theo ca làm việc KTV</p>
+          </div>
+          <button class="btn primary" onclick="openModal('appointmentModal')">+ Tạo lịch mới</button>
+        </div>
+
+        <div class="card">
+          <!-- Đã cập nhật phần Header Calendar để tự động nhận bộ chọn ngày -->
+          <div class="calendar-head">
+  <div><b id="currentDateTitle">21 Tháng 8, 2026</b><span class="muted" id="totalAppCount"> · 0 lịch hẹn</span></div>
+  <div class="date-nav" style="display: flex; align-items: center; gap: 6px;">
+    <button class="btn small" id="prevDateBtn">‹</button>
+    <input type="date" id="datePickerInput" class="input" style="padding: 3px 6px; font-size: 13px;">
+    <button class="btn small" id="nextDateBtn">›</button>
+    
+  </div>
+</div>
+
+          <div class="daytabs">
+            <button class="active">Tất cả KTV</button>
+            <button>Mai</button>
+            <button>Lan</button>
+            <button>Hương</button>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th>Thời gian</th><th>Khách hàng</th><th>Dịch vụ</th><th>KTV</th><th>Trạng thái</th><th>Thao tác</th></tr>
+            </thead>
+            <tbody>
+              <!-- Dữ liệu được JavaScript sinh tự động tại đây -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Appointment Modal -->
+  <div id="appointmentModal" class="modal">
+    <div class="modal-box">
+      <div class="page-head">
+        <div>
+          <h2 class="page-title" style="font-size:21px">Tạo lịch hẹn mới</h2>
+          <p class="sub">PENDING → CONFIRMED sau khi lễ tân xác nhận</p>
+        </div>
+        <button class="btn small" onclick="closeModal('appointmentModal')">✕</button>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Khách hàng</label>
+          <select class="input" id="formCustomer">
+          </select>
+        </div>
+        <div class="field">
+          <label>Dịch vụ</label>
+          <select class="input" id="formService">
+            <option value="Cấp ẩm Deep Moist · 650.000 ₫">Cấp ẩm Deep Moist · 650.000 ₫</option>
+            <option value="Massage Body Thụy Điển · 750.000 ₫">Massage Body Thụy Điển · 750.000 ₫</option>
+            <option value="Tẩy tế bào chết toàn thân · 500.000 ₫">Tẩy tế bào chết toàn thân · 500.000 ₫</option>
+            <option value="Triệt lông diode laser · 400.000 ₫">Triệt lông diode laser · 400.000 ₫</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Ngày</label>
+          <input class="input" type="date" id="formDate">
+        </div>
+        <div class="field">
+          <label>Giờ</label>
+          <input class="input" type="time" id="formTime" value="14:00">
+        </div>
+        <div class="field">
+          <label>KTV</label>
+          <select class="input" id="formKtv">
+            <option value="Phân công tự động">Phân công tự động</option>
+            <option value="Mai">Mai</option>
+            <option value="Lan">Lan</option>
+            <option value="Hương">Hương</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Phòng</label>
+          <select class="input" id="formRoom">
+            <option value="Tự động kiểm tra">Tự động kiểm tra</option>
+            <option value="Phòng 01">Phòng 01</option>
+            <option value="Phòng 02">Phòng 02</option>
+            <option value="Phòng 03">Phòng 03</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Ghi chú</label>
+          <textarea class="input" id="formNote" rows="3" placeholder="Nhu cầu hiện tại của khách..."></textarea>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">
+        <button class="btn" onclick="closeModal('appointmentModal')">Hủy</button>
+        <button class="btn primary" onclick="handleFormSubmit(event)">Lưu lịch hẹn</button>
+      </div>
+    </div>
+  </div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/appointments.js"></script>
+</body>
+</html>

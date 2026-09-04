@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Khách hàng - Spa Sisters</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/customers.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><img src="../image/Logo_spa.png" alt="Logo Spa" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <span class="label">Spa Sisters</span><span class="role">RECEPTION</span>
+      </div>
+      <div class="nav-section">Tổng quan</div>
+      <div class="nav">
+        <a href="dashboard.html"><span class="icon">⌂</span><span class="label">Dashboard</span></a>
+        <a href="appointments.html"><span class="icon">◷</span><span class="label">Lịch hẹn</span></a>
+        <a href="customers.html" class="active"><span class="icon">♙</span><span class="label">Khách hàng</span></a>
+      </div>
+      <div class="nav-section">Vận hành</div>
+      <div class="nav">
+        <a href="pos.html"><span class="icon">▣</span><span class="label">Thanh toán / POS</span></a>
+        <a href="services.html"><span class="icon">◇</span><span class="label">Dịch vụ & gói</span></a>
+        <a href="products.html"><span class="icon">▤</span><span class="label">Sản phẩm & kho</span></a>
+      </div>
+      <div class="nav-section">AI Assistant</div>
+      <div class="nav">
+        <a href="ai-recommend.html"><span class="icon">✦</span><span class="label">Gợi ý dịch vụ</span></a>
+        <a href="ai-outreach.html"><span class="icon">◌</span><span class="label">Tin nhắn CSKH</span></a>
+      </div>
+      <div class="nav-section">Quản trị</div>
+      <div class="nav">
+        <a href="staff.html"><span class="icon">♟</span><span class="label">Nhân viên & quyền</span></a>
+        <a href="reports.html"><span class="icon">▥</span><span class="label">Báo cáo</span></a>
+        <a href="settings.html"><span class="icon">⚙</span><span class="label">Cài đặt</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Khách hàng / Danh sách</div>
+        <div class="top-actions">
+          <a href="appointments.html" class="btn small">+ Lịch mới</a>
+          <span>🔔</span>
+          <div class="avatar">LH</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Khách hàng</h1>
+            <p class="sub">Hồ sơ, lịch sử liệu trình và AI Profile Summary</p>
+          </div>
+          <button class="btn primary" onclick="openModal('customerModal')">+ Thêm khách hàng</button>
+        </div>
+
+        <div class="card">
+          <div class="searchbar">
+            <input class="input" placeholder="🔎 Tìm theo tên hoặc số điện thoại...">
+            <select class="input" style="max-width:170px"><option>Tất cả</option><option>Khách mới</option><option>Thân thiết</option></select>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Khách hàng</th><th>SĐT</th><th>Lần gần nhất</th><th>Dịch vụ</th><th>Trạng thái</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>Nguyễn Minh Anh</b><br><span class="muted">Khách từ 05/2026</span></td><td>0901 234 567</td><td>20/08/2026</td><td>Cấp ẩm Deep Moist</td><td><span class="status success">ACTIVE</span></td><td><a href="customer-detail.html" class="btn small">Hồ sơ</a></td></tr>
+              <tr><td><b>Trần Ngọc Hà</b></td><td>0912 345 678</td><td>18/08/2026</td><td>Massage Body</td><td><span class="status success">ACTIVE</span></td><td><a href="customer-detail.html" class="btn small">Hồ sơ</a></td></tr>
+              <tr><td><b>Lê Thu Trang</b></td><td>0988 112 233</td><td>02/08/2026</td><td>Peel chăm sóc</td><td><span class="status neutral">NEW</span></td><td><a href="customer-detail.html" class="btn small">Hồ sơ</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Customer Modal -->
+  <div id="customerModal" class="modal">
+    <div class="modal-box">
+      <div class="page-head">
+        <h2 class="page-title" style="font-size:21px">Thêm khách hàng</h2>
+        <button class="btn small" onclick="closeModal('customerModal')">✕</button>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Họ tên</label><input class="input" placeholder="Nguyễn Văn A"></div>
+        <div class="field"><label>Số điện thoại *</label><input class="input" placeholder="09xx xxx xxx"></div>
+        <div class="field"><label>Email</label><input class="input" placeholder="email@example.com"></div>
+        <div class="field"><label>Ngày sinh</label><input class="input" type="date"></div>
+        <div class="field"><label>Giới tính</label><select class="input"><option>Không cung cấp</option><option>Nữ</option><option>Nam</option></select></div>
+        <div class="field"><label>Loại da / cơ địa</label><input class="input"></div>
+        <div class="field full"><label>Ghi chú tư vấn ban đầu</label><textarea class="input" rows="4"></textarea></div>
+      </div>
+      <div style="text-align:right;margin-top:18px">
+        <button class="btn primary" onclick="closeModal('customerModal');toast('Đã tạo hồ sơ khách hàng')">Lưu hồ sơ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/customers.js"></script>
+</body>
+</html>

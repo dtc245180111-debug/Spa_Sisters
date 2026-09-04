@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Gợi ý dịch vụ - Spa Sisters</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    /* CSS bổ sung cho giao diện AI */
+    .ai-card {
+      background: #fffbfd;
+      border: 1px solid #f2e3ea;
+      position: relative;
+    }
+    .ai-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .recommend {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .recommend strong {
+      color: #d85c8a;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .recommend span {
+      font-size: 12px;
+      color: #666;
+    }
+    .msg-box {
+      background: #fdf2f7;
+      border-left: 3px solid #d85c8a;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #444;
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+    /* Loading Spinner */
+    .loading-spinner {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><img src="../image/Logo_spa.png" alt="Logo Spa" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <span class="label">Spa Sisters</span><span class="role">RECEPTION</span>
+      </div>
+      <div class="nav-section">Tổng quan</div>
+      <div class="nav">
+        <a href="dashboard.html"><span class="icon">⌂</span><span class="label">Dashboard</span></a>
+        <a href="appointments.html"><span class="icon">◷</span><span class="label">Lịch hẹn</span></a>
+        <a href="customers.html"><span class="icon">♙</span><span class="label">Khách hàng</span></a>
+      </div>
+      <div class="nav-section">Vận hành</div>
+      <div class="nav">
+        <a href="pos.html"><span class="icon">▣</span><span class="label">Thanh toán / POS</span></a>
+        <a href="services.html"><span class="icon">◇</span><span class="label">Dịch vụ & gói</span></a>
+        <a href="products.html"><span class="icon">▤</span><span class="label">Sản phẩm & kho</span></a>
+      </div>
+      <div class="nav-section">AI Assistant</div>
+      <div class="nav">
+        <a href="ai-recommend.html" class="active"><span class="icon">✦</span><span class="label">Gợi ý dịch vụ</span></a>
+        <a href="ai-outreach.html"><span class="icon">◌</span><span class="label">Tin nhắn CSKH</span></a>
+      </div>
+      <div class="nav-section">Quản trị</div>
+      <div class="nav">
+        <a href="staff.html"><span class="icon">♟</span><span class="label">Nhân viên & quyền</span></a>
+        <a href="reports.html"><span class="icon">▥</span><span class="label">Báo cáo</span></a>
+        <a href="settings.html"><span class="icon">⚙</span><span class="label">Cài đặt</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">AI Assistant / Gợi ý dịch vụ</div>
+        <div class="top-actions">
+          <a href="appointments.html" class="btn small">+ Lịch mới</a>
+          <span>🔔</span>
+          <div class="avatar">LH</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">✦ AI Gợi ý dịch vụ</h1>
+            <p class="sub">Service Recommender · Gợi ý tối đa 2 dịch vụ từ danh mục Spa</p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <!-- ĐẦU VÀO AI -->
+          <div class="card">
+            <h3 class="section-title">Đầu vào AI</h3>
+            <div class="field">
+              <label>Khách hàng</label>
+              <select class="input" id="customerSelect">
+                <!-- Nạp danh sách khách hàng qua JS -->
+              </select>
+            </div>
+            <div class="field" style="margin-top:12px">
+              <label>Nhu cầu hiện tại</label>
+              <textarea class="input" id="customerNeed" rows="5" placeholder="Nhập tình trạng da, cơ thể hoặc mong muốn của khách hàng...">Da dạo này khô do ngồi điều hòa nhiều, mỏi lưng.</textarea>
+            </div>
+            <p class="muted" style="margin: 12px 0;">AI sử dụng nhu cầu + lịch sử dịch vụ + danh mục hiện có. Guardrail: không chẩn đoán y khoa, không cam kết hiệu quả điều trị.</p>
+            <button class="btn primary" id="btnAnalyze" onclick="analyzeAndRecommend()">✦ Phân tích & gợi ý</button>
+          </div>
+
+          <!-- KẾT QUẢ AI -->
+          <div class="card ai-card">
+            <span class="ai-badge">AI OUTPUT · JSON VALIDATED</span>
+            <h3 id="recommendTitle">2 dịch vụ phù hợp</h3>
+            
+            <div id="loadingState" class="loading-spinner">
+              ✦ AI đang phân tích dữ liệu & quét danh mục dịch vụ...
+            </div>
+
+            <div id="recommendContainer">
+              <!-- Render kết quả gợi ý tại đây -->
+            </div>
+
+            <div style="margin-top:14px" id="messageSection">
+              <b>Tin nhắn tư vấn</b>
+              <div id="aiMessageText" class="msg-box"></div>
+              <button class="btn small" onclick="editMessage()">Sửa nội dung</button>
+              <button class="btn primary small" onclick="sendConsultMessage()">Duyệt gửi tin nhắn</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/ai-recommend.js"></script>
+</body>
+</html>

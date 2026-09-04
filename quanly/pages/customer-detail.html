@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Hồ sơ khách hàng - Spa Sisters</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/customers.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><img src="../image/Logo_spa.png" alt="Logo Spa" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <span class="label">Spa Sisters</span><span class="role">RECEPTION</span>
+      </div>
+      <div class="nav-section">Tổng quan</div>
+      <div class="nav">
+        <a href="dashboard.html"><span class="icon">⌂</span><span class="label">Dashboard</span></a>
+        <a href="appointments.html"><span class="icon">◷</span><span class="label">Lịch hẹn</span></a>
+        <a href="customers.html" class="active"><span class="icon">♙</span><span class="label">Khách hàng</span></a>
+      </div>
+      <div class="nav-section">Vận hành</div>
+      <div class="nav">
+        <a href="pos.html"><span class="icon">▣</span><span class="label">Thanh toán / POS</span></a>
+        <a href="services.html"><span class="icon">◇</span><span class="label">Dịch vụ & gói</span></a>
+        <a href="products.html"><span class="icon">▤</span><span class="label">Sản phẩm & kho</span></a>
+      </div>
+      <div class="nav-section">AI Assistant</div>
+      <div class="nav">
+        <a href="ai-recommend.html"><span class="icon">✦</span><span class="label">Gợi ý dịch vụ</span></a>
+        <a href="ai-outreach.html"><span class="icon">◌</span><span class="label">Tin nhắn CSKH</span></a>
+      </div>
+      <div class="nav-section">Quản trị</div>
+      <div class="nav">
+        <a href="staff.html"><span class="icon">♟</span><span class="label">Nhân viên & quyền</span></a>
+        <a href="reports.html"><span class="icon">▥</span><span class="label">Báo cáo</span></a>
+        <a href="settings.html"><span class="icon">⚙</span><span class="label">Cài đặt</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Khách hàng / Quản lý danh sách</div>
+        <div class="top-actions">
+          <button class="btn small" onclick="openCustomerModal()">+ Khách mới</button>
+          <span>🔔</span>
+          <div class="avatar">LH</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Quản lý khách hàng</h1>
+            <p class="sub">Danh sách & Hồ sơ chi tiết liệu trình khách hàng</p>
+          </div>
+          <button class="btn primary" onclick="openCustomerModal()">+ Thêm khách hàng</button>
+        </div>
+
+        <!-- Thanh Tìm kiếm -->
+        <div class="card" style="margin-bottom: 16px; padding: 12px 16px;">
+          <input type="text" id="customerSearchInput" class="input" placeholder="🔍 Tìm kiếm theo tên hoặc số điện thoại..." style="width: 100%; max-width: 400px;">
+        </div>
+
+        <!-- Bảng danh sách Khách hàng -->
+        <div class="card" style="margin-bottom: 24px;">
+          <h3 class="section-title" style="margin-bottom: 12px;">Danh sách khách hàng</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Mã KH</th>
+                <th>Họ & Tên</th>
+                <th>Số điện thoại</th>
+                <th>Phân loại</th>
+                <th>Lần sử dụng</th>
+                <th>Tổng chi tiêu</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="customerTableBody">
+              <!-- Render động bằng JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Khu vực Hồ sơ chi tiết (Hiển thị khách được chọn) -->
+        <div class="profile" id="customerDetailSection">
+          <div class="card profile-side">
+            <div class="portrait" id="detailAvatar">MA</div>
+            <h3 id="detailName">Nguyễn Minh Anh</h3>
+            <div class="muted" id="detailType">Khách thân thiết</div>
+            <div class="metric"><b id="detailVisits">12</b><br><span class="muted">lần sử dụng</span></div>
+            <div class="metric"><b id="detailSpent">8.450.000 ₫</b><br><span class="muted">tổng chi tiêu</span></div>
+          </div>
+
+          <div class="grid">
+            <div class="card ai-card">
+              <span class="ai-badge">✦ AI PROFILE SUMMARY</span>
+              <p id="detailAiSummary">• Đã sử dụng dịch vụ cấp ẩm và massage cổ vai gáy.<br>• Ưu tiên lực massage vừa; chọn khung giờ chiều.<br>• KTV xem lại ghi chú trước khi thực hiện dịch vụ.</p>
+              <button class="btn small" onclick="copyAiSummary()">Sao chép</button>
+            </div>
+
+            <div class="card">
+              <h3 class="section-title">Lịch sử liệu trình</h3>
+              <table>
+                <thead>
+                  <tr><th>Ngày</th><th>Dịch vụ</th><th>Ghi chú KTV</th><th>AI</th></tr>
+                </thead>
+                <tbody id="detailHistoryBody">
+                  <!-- Render động lịch sử liệu trình -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Thêm/Sửa Khách hàng -->
+  <div id="customerModal" class="modal" style="display:none;">
+    <div class="modal-box">
+      <div class="page-head">
+        <div>
+          <h2 class="page-title" id="customerModalTitle" style="font-size:21px">Thêm khách hàng mới</h2>
+        </div>
+        <button class="btn small" onclick="closeCustomerModal()">✕</button>
+      </div>
+      <div class="form-grid">
+        <div class="field full">
+          <label>Họ và tên</label>
+          <input class="input" type="text" id="custFormName" placeholder="Nhập tên khách hàng...">
+        </div>
+        <div class="field">
+          <label>Số điện thoại</label>
+          <input class="input" type="text" id="custFormPhone" placeholder="090x xxx xxx">
+        </div>
+        <div class="field">
+          <label>Phân loại khách</label>
+          <select class="input" id="custFormType">
+            <option value="Khách mới">Khách mới</option>
+            <option value="Khách thân thiết">Khách thân thiết</option>
+            <option value="Khách VIP">Khách VIP</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Tóm tắt AI / Ghi chú</label>
+          <textarea class="input" id="custFormNotes" rows="3" placeholder="Ghi chú đặc điểm da, sở thích của khách..."></textarea>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">
+        <button class="btn" onclick="closeCustomerModal()">Hủy</button>
+        <button class="btn primary" onclick="handleCustomerSubmit()">Lưu thông tin</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

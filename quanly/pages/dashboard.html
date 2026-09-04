@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Spa Sisters</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><img src="../image/Logo_spa.png" alt="Logo Spa" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <span class="label">Spa Sisters</span>
+        <span class="role">RECEPTION</span>
+      </div>
+      <div class="nav-section">Tổng quan</div>
+      <div class="nav">
+        <a href="dashboard.html" class="active"><span class="icon">⌂</span><span class="label">Dashboard</span></a>
+        <a href="appointments.html"><span class="icon">◷</span><span class="label">Lịch hẹn</span></a>
+        <a href="customers.html"><span class="icon">♙</span><span class="label">Khách hàng</span></a>
+      </div>
+      <div class="nav-section">Vận hành</div>
+      <div class="nav">
+        <a href="pos.html"><span class="icon">▣</span><span class="label">Thanh toán / POS</span></a>
+        <a href="services.html"><span class="icon">◇</span><span class="label">Dịch vụ & gói</span></a>
+        <a href="products.html"><span class="icon">▤</span><span class="label">Sản phẩm & kho</span></a>
+      </div>
+      <div class="nav-section">AI Assistant</div>
+      <div class="nav">
+        <a href="ai-recommend.html"><span class="icon">✦</span><span class="label">Gợi ý dịch vụ</span></a>
+        <a href="ai-outreach.html"><span class="icon">◌</span><span class="label">Tin nhắn CSKH</span></a>
+      </div>
+      <div class="nav-section">Quản trị</div>
+      <div class="nav">
+        <a href="staff.html"><span class="icon">♟</span><span class="label">Nhân viên & quyền</span></a>
+        <a href="reports.html"><span class="icon">▥</span><span class="label">Báo cáo</span></a>
+        <a href="settings.html"><span class="icon">⚙</span><span class="label">Cài đặt</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Tổng quan / Dashboard</div>
+        <div class="top-actions">
+          <a href="appointments.html" class="btn small">+ Lịch mới</a>
+          <span>🔔</span>
+          <div class="avatar">LH</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Chào buổi sáng, Linh 👋</h1>
+            <p class="sub">Tổng quan vận hành Spa Spa_Sisters · Thứ Sáu, 21/08/2026</p>
+          </div>
+          <a href="appointments.html" class="btn primary">+ Tạo lịch mới</a>
+        </div>
+
+        <div class="grid kpi-grid">
+          <div class="card"><div class="kpi-label">Doanh thu hôm nay</div><div class="kpi-value">18.450.000 ₫</div><div class="trend">↑ 12,4% so với hôm qua</div></div>
+          <div class="card"><div class="kpi-label">Lịch hẹn hôm nay</div><div class="kpi-value">24</div><div class="trend">18 đã xác nhận</div></div>
+          <div class="card"><div class="kpi-label">Khách đang làm</div><div class="kpi-value">4</div><div class="trend">2 phòng đang trống</div></div>
+          <div class="card"><div class="kpi-label">Tồn kho cần chú ý</div><div class="kpi-value">7</div><div class="trend" style="color:var(--warning)">Sản phẩm sắp hết</div></div>
+        </div>
+
+        <div class="grid two" style="margin-top:16px">
+          <div class="card">
+            <div class="section-title">Lịch hẹn hôm nay</div>
+            <div class="timeline">
+              <div class="time">09:00</div>
+              <div class="slot"><div class="booking"><b>09:00 · Nguyễn Minh Anh</b><em>Cấp ẩm Deep Moist · KTV: Mai</em> <span class="status success" style="float:right">CONFIRMED</span></div></div>
+              <div class="time">10:30</div>
+              <div class="slot"><div class="booking"><b>10:30 · Trần Ngọc Hà</b><em>Massage Body Thụy Điển · KTV: Lan</em> <span class="status warning" style="float:right">IN_PROGRESS</span></div></div>
+              <div class="time">13:30</div>
+              <div class="slot"><div class="booking"><b>13:30 · Lê Thu Trang</b><em>Tẩy tế bào chết toàn thân · KTV: Mai</em> <span class="status neutral" style="float:right">PENDING</span></div></div>
+            </div>
+          </div>
+
+          <div class="card ai-card">
+            <span class="ai-badge">✦ AI ASSISTANT</span>
+            <h3>Gợi ý cần xử lý</h3>
+            <p class="muted">3 khách có lịch trong 24h cần tin nhắn nhắc lịch.</p>
+            <div class="recommend"><strong>Nguyễn Minh Anh</strong><span>Có thể gửi nhắc lịch + dặn dò trước dịch vụ.</span></div>
+            <div class="recommend"><strong>Phạm Thuỷ Tiên</strong><span>AI phát hiện lịch sử chăm sóc phù hợp với gói cấp ẩm.</span></div>
+            <a href="ai-outreach.html" class="btn primary small" style="margin-top:12px">Mở AI CSKH →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="../js/main.js"></script>
+</body>
+</html>

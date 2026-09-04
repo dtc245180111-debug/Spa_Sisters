@@ -1,0 +1,24 @@
+.chat {
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bubble {
+  max-width: 80%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.bubble.ai {
+  background: var(--sand);
+  align-self: flex-start;
+}
+
+.bubble.me {
+  background: var(--taupe);
+  color: #fff;
+  align-self: flex-end;
+}

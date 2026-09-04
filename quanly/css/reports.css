@@ -1,0 +1,32 @@
+.bar-chart {
+  height: 230px;
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  padding: 20px 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bar {
+  flex: 1;
+  background: var(--beige);
+  border-radius: 6px 6px 0 0;
+  min-height: 12px;
+  position: relative;
+}
+
+.bar span {
+  position: absolute;
+  top: -20px;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+}
+
+.bar small {
+  position: absolute;
+  bottom: -20px;
+  width: 100%;
+  text-align: center;
+  color: #9A7C87;
+}

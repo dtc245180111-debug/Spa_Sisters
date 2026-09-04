@@ -1,0 +1,82 @@
+/* Cố định layout bảng không vỡ khung */
+.card table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.card table th {
+  background-color: #fcf4f6;
+  color: #666;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 10px 8px;
+}
+
+.card table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #f2f2f2;
+  vertical-align: middle;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ép cột thao tác và nút luôn hiển thị gọn trên 1 hàng */
+.card table td:last-child {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.card table td button.btn.small {
+  padding: 3px 5px !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  margin-left: 1px !important;
+  display: inline-block;
+}
+
+/* Xử lý Dropdown tên khách hàng không bị tràn */
+#posCustomerSelect {
+  max-width: 180px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 12px;
+  width: 460px;
+  max-width: 90%;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.pay-btn-group button.active {
+  background-color: var(--primary, #b05c77) !important;
+  color: #fff !important;
+  border-color: var(--primary, #b05c77) !important;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spa_Sisters - Đăng nhập</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-card">
+    <div class="logo-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#b56576" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a5 5 0 0 0-5 5v2a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"></path>
+        <path d="M12 14c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z"></path>
+        <path d="M18 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"></path>
+      </svg>
+    </div>
+
+    <h1 class="brand-title">Spa_Sisters</h1>
+    <p class="brand-subtitle">Hệ thống quản lý spa & chăm sóc sắc đẹp</p>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="input-group">
+        <label for="username">Tên đăng nhập</label>
+        <input type="text" id="username" placeholder="Nhập tên đăng nhập" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" placeholder="••••••" required>
+      </div>
+
+      <button type="submit" class="btn-submit">Đăng nhập</button>
+    </form>
+
+    <div class="demo-hint">
+      Demo: Manager · Receptionist · Technician
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

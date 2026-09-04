@@ -1,0 +1,57 @@
+.ai-card {
+  border: 1px solid #d6c4af;
+  background: linear-gradient(135deg, #FCECF2, #fffdf9);
+  position: relative;
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--taupe);
+  color: #fff;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.ai-card h3 { margin: 12px 0 7px; }
+
+.recommend {
+  padding: 11px 12px;
+  background: #FFF1F6;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-top: 9px;
+}
+.recommend strong { display: block; }
+.recommend span { font-size: 12px; color: #8A6D78; }
+
+.timeline {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.time {
+  padding: 13px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  color: #9A7C87;
+  background: var(--sand);
+}
+
+.slot { min-height: 64px; padding: 8px; border-bottom: 1px solid var(--border); position: relative; }
+.booking {
+  padding: 9px 11px;
+  border-radius: 9px;
+  background: #F7DDE6;
+  border-left: 4px solid var(--taupe);
+  font-size: 12px;
+}
+.booking b { display: block; }
+.booking em { font-style: normal; color: #8A6D78; font-size: 11px; }

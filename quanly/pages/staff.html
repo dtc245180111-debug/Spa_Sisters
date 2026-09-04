@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Nhân viên - Spa Sisters</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><img src="../image/Logo_spa.png" alt="Logo Spa" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <span class="label">Spa Sisters</span><span class="role">RECEPTION</span>
+      </div>
+      <div class="nav-section">Tổng quan</div>
+      <div class="nav">
+        <a href="dashboard.html"><span class="icon">⌂</span><span class="label">Dashboard</span></a>
+        <a href="appointments.html"><span class="icon">◷</span><span class="label">Lịch hẹn</span></a>
+        <a href="customers.html"><span class="icon">♙</span><span class="label">Khách hàng</span></a>
+      </div>
+      <div class="nav-section">Vận hành</div>
+      <div class="nav">
+        <a href="pos.html"><span class="icon">▣</span><span class="label">Thanh toán / POS</span></a>
+        <a href="services.html"><span class="icon">◇</span><span class="label">Dịch vụ & gói</span></a>
+        <a href="products.html"><span class="icon">▤</span><span class="label">Sản phẩm & kho</span></a>
+      </div>
+      <div class="nav-section">AI Assistant</div>
+      <div class="nav">
+        <a href="ai-recommend.html"><span class="icon">✦</span><span class="label">Gợi ý dịch vụ</span></a>
+        <a href="ai-outreach.html"><span class="icon">◌</span><span class="label">Tin nhắn CSKH</span></a>
+      </div>
+      <div class="nav-section">Quản trị</div>
+      <div class="nav">
+        <a href="staff.html" class="active"><span class="icon">♟</span><span class="label">Nhân viên & quyền</span></a>
+        <a href="reports.html"><span class="icon">▥</span><span class="label">Báo cáo</span></a>
+        <a href="settings.html"><span class="icon">⚙</span><span class="label">Cài đặt</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Quản trị / Nhân viên & quyền</div>
+        <div class="top-actions">
+          <a href="appointments.html" class="btn small">+ Lịch mới</a>
+          <span>🔔</span>
+          <div class="avatar">LH</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Nhân viên & phân quyền</h1>
+            <p class="sub">RBAC · Manager / Receptionist / Technician</p>
+          </div>
+          <button class="btn primary">+ Thêm nhân viên</button>
+        </div>
+
+        <div class="card">
+          <table>
+            <thead>
+              <tr><th>Nhân viên</th><th>Username</th><th>Vai trò</th><th>Quyền chính</th><th>Trạng thái</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>Nguyễn Lan Anh</b></td><td>manager</td><td><span class="status neutral">MANAGER</span></td><td>Toàn quyền</td><td><span class="status success">ACTIVE</span></td><td><button class="btn small">Phân quyền</button></td></tr>
+              <tr><td><b>Trần Linh</b></td><td>receptionist</td><td><span class="status neutral">RECEPTIONIST</span></td><td>Lịch · Khách · POS · AI</td><td><span class="status success">ACTIVE</span></td><td><button class="btn small">Phân quyền</button></td></tr>
+              <tr><td><b>Mai Phương</b></td><td>mai.tech</td><td><span class="status neutral">TECHNICIAN</span></td><td>Lịch cá nhân · Ghi chú · AI Summary</td><td><span class="status success">ACTIVE</span></td><td><button class="btn small">Phân quyền</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="../js/main.js"></script>
+</body>
+</html>
